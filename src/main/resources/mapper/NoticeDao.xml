@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.dao.NoticeDao">
+
+    <select id="findAllMessage" resultType="com.example.model.Message">
+        SELECT m_id,from_id,to_id,creat_time,m_title,m_details,m_type,m_type,m_state
+        FROM message
+    </select>
+
+    <delete id="deleteMessage" >
+        DELETE FROM `message` where m_id=#{m_id}
+    </delete>
+
+    <insert id="insertMessage" parameterType="com.example.model.Message" useGeneratedKeys="true" keyProperty="m_id" keyColumn="m_id">
+		INSERT INTO
+		message(m_id,from_id,to_id,creat_time,m_title,m_details,m_type,m_type,m_state)
+		VALUES
+		(#{m_id},#{from_id},#{to_id},#{creat_time},#{m_title},#{m_details},#{m_type},#{m_type},#{m_state})
+	</insert>
+
+    <update id="updateMessage" parameterType="com.example.model.Message">
+        update message
+        <set>
+            <if test="m_id!=null">m_id=#{m_id},</if>
+            <if test="from_id!=null">from_id=#{from_id},</if>
+            <if test="to_id!=null">to_id=#{to_id},</if>
+            <if test="creat_time!=null">creat_time=#{creat_time},</if>
+            <if test="m_title!=null">m_title=#{m_title},</if>
+            <if test="m_details!=null">m_details=#{m_details},</if>
+            <if test="m_type!=null">m_type=#{m_type},</if>
+            <if test="m_state!=null">m_state=#{m_state},</if>
+        </set>
+        where m_id=#{m_id}
+    </update>
+</mapper>

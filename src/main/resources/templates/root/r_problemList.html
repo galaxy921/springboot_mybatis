@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <![endif]-->
+    <link href="../../css/H-ui.css" rel="stylesheet" type="text/css" />
+    <link href="../../lib2/Hui-iconfont/1.0.8/iconfont.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <style type="text/css">
+        .ui-sortable .panel-header{ cursor:move}
+    </style>
+    <title>系统管理员版 问题记录</title>
+    <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
+    <meta name="description" content="网站描述，字数尽量空制在80个汉字，160个字符以内！">
+</head>
+<body ontouchstart>
+<!------------------头上的导航栏-------------->
+<div class="containBox">
+    <div>
+        <header class="navbar-wrapper">
+            <div class="navbar navbar-black navbar-fixed-top">
+                <div class="container cl">
+                    <a class="logo navbar-logo hidden-xs" href="/">大学生创新创业系统</a>
+                    <a class="logo navbar-logo-m visible-xs" href="/"></a>
+                    <span class="logo navbar-slogan hidden-xs"> 系统管理员版 &middot; 欢迎</span>
+                    <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
+
+
+                    <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
+                        <ul class="cl">
+                            <li class="dropDown dropDown_hover">
+                                <a href="../root/r_projectList.html" class="dropDown_A">项目管理</a>
+                            </li>
+                            <li class="dropDown dropDown_hover">
+                                <a href="../root/r_problemList.html" class="dropDown_A">问题管理</a>
+                            </li>
+                            <li class="dropDown dropDown_hover">
+                                <a href="javascript:;" class="dropDown_A">用户管理<i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <ul class="dropDown-menu menu radius box-shadow">
+                                    <li>
+                                        <a href="../root/user.html" >查看用户信息</a><!--修改放在这里 按钮-->
+                                    </li>
+                                    <li>
+                                        <a href="../root/user_add.html" >增加用户信息</a>
+                                    </li>
+                                    <li>
+                                        <a href="../root/user_analyze.html">用户行为分析</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropDown dropDown_hover">
+                                <a href="javascript:;" class="dropDown_A">公告管理<i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <ul class="dropDown-menu menu radius box-shadow">
+                                    <li>
+                                        <a href="../root/notice.html">查看公告</a><!--删除公告放在这里 按钮-->
+                                    </li>
+                                    <li>
+                                        <a href="../root/notice_add.html">发布公告</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropDown dropDown_hover " style="float: right">
+                                <a href="javascript:;" class="dropDown_A">XXXXXX XXX<i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <ul class="dropDown-menu menu radius box-shadow">
+                                    <li>
+                                        <a href="../root/user_info.html"  >修改个人信息</a>
+                                    </li>
+                                    <li>
+                                        <a href="../login.html"  >退出系统</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div class="containBox-bg"></div>
+        <nav class="breadcrumb">
+            <div class="container">
+                <i class="Hui-iconfont">&#xe67f;</i>
+                <span class="c-gray">系统管理员版</span>
+                <span class="c-gray en">&gt;</span>
+                <a href="../root/r_index.html" class="c-primary">首页</a>
+                <span class="c-gray en">&gt;</span>
+                <a href="#" class="c-primary">问题记录</a>
+            </div>
+        </nav>
+    </div>
+
+</div>
+<!-----------------问题记录-———--------------->
+<div class="panel panel-default mt-20">
+    <div  class="panel-header" >问题记录</div>
+    <div class="panel-body" style="display: block;">
+        <table class="table table-border table-bordered table-striped mt-20">
+            <thead>
+            <tr>
+                <th class="col1" style="width: 150px">问题主题</th>
+                <th class="col2" style="width: 250px;">提问时间</th>
+                <th class="col3">问题详情</th>
+                <th class="col4" style="width: 50px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="col1">1XXX</td>
+                <td class="col2">1XXX</td>
+                <td class="col3" onClick="modaldemo()">1XXX</td>
+                <td class="col4">
+                    <i class="fa fa-trash-o" onclick="layer_demo()"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="col1">2XXX</td>
+                <td class="col2">2XXX</td>
+                <td class="col3" onClick="modaldemo()">2XXX</td>
+                <td class="col4">
+                    <i class="fa fa-trash-o" onclick="layer_demo()"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="col1">3XXX</td>
+                <td class="col2">3XXX</td>
+                <td class="col3" onClick="modaldemo()">3XXX</td>
+                <td class="col4">
+                    <i class="fa fa-trash-o" onclick="layer_demo()"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!------------------问题详情弹出框———--------------->
+<div id="modal-demo" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">问题详情</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th class="col1" style="width: 80px">提问者</th>
+                        <td class="col2">AXX</td>
+                    </tr>
+                    <tr>
+                        <th class="col1">提问时间</th>
+                        <td class="col2">2019-03-28</td>
+                    </tr>
+                    <tr>
+                        <th class="col1">问题详情</th>
+                        <td class="col2">XXXXXXXXXX=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</td>
+                    </tr>
+                    <tr>
+                        <th class="col1">问题回复</th>
+                        <td th:if="${message.messageState==3}"></th:if>
+                            <input class="btn btn-primary size-MINI radius disabled" type="button" value="未解决"></td>
+                        <td th:if="${message.messageState==2}"></th:if>
+                            <input class="btn btn-primary size-MINI radius reply_info" type="button" value="点击查看"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!------------------查看回复———--------------->
+                <div class="panel panel-default" id="reply" style="display: none;">
+                    <div class="panel-header">问题回复</div>
+                    <div class="panel-body">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th class="col1" style="width: 80px">回复者</th>
+                                <td class="col2">CXX</td>
+                            </tr>
+                            <tr>
+                                <th class="col1">回复时间</th>
+                                <td class="col2">2019-03-29</td>
+                            </tr>
+                            <tr>
+                                <th class="col1">回复详情</th>
+                                <td class="col2">XXXXXXXXXX=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------删除问题确认———--------------->
+<div id="delete" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">确认删除吗？</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                    <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="确定">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------script--------->
+<script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>
+<script type="text/javascript" src="../../lib2/html5shiv.js"></script>
+<script type="text/javascript" src="../../lib2/respond.min.js"></script>
+<script type="text/javascript" src="../../lib2/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../lib2/jquery-ui/1.9.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js2/H-ui.js"></script>
+<script type="text/javascript" src="../../lib2/jquery.SuperSlide/2.1.1/jquery.SuperSlide.min.js"></script>
+<script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/messages_zh.min.js"></script>
+<script>
+    $(function() {
+        $(".panel").Huifold({
+            titCell:'.panel-header',
+            mainCell:'.panel-body',
+            type:1,
+            trigger:'click',
+            className:"selected",
+            speed:"first",
+        });
+
+    });
+    //弹窗
+    function layer_demo(){
+        $("#delete").modal("show");
+    }
+    //弹窗
+    function modaldemo(){
+        $("#modal-demo").modal("show");
+    }
+    $(document).ready(function(){
+        $(".reply_info").click(function(){
+            $("#reply").slideToggle();
+        });
+    });
+</script>
+</body>
+</html>
+<!--H-ui前端框架提供前端技术支持 h-ui.net @2017-01-01 -->
