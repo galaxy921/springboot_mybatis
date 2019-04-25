@@ -26,7 +26,7 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
     //查看项目列表
-    @RequestMapping(value = "/findallproject/pid={}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findallproject/{pid}", method = RequestMethod.GET)
     public String findAllProject(Model model) {
         List<Project> list = projectService.findAllProject();
         model.addAttribute("projectList", list);
