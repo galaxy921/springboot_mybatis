@@ -81,4 +81,18 @@ public class Project {
     public void setP_state(Integer p_state) {
         this.p_state = p_state;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "p_id=" + p_id +
+                ", p_name='" + p_name + '\'' +
+                ", p_details='" + p_details + '\'' +
+                ", p_file='" + p_file + '\'' +
+                ", p_report='" + p_report + '\'' +
+                ", score='" + score + '\'' +
+                ", percentage='" + percentage + '\'' +
+                ", p_state=" + p_state +
+                '}';
+    }
 }

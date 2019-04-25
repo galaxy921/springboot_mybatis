@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,19 +25,31 @@ import java.util.List;
 public class ProjectController {
     @Autowired
     ProjectService projectService;
-
-    @RequestMapping(value = "/findallproject", method = RequestMethod.GET)
+    //查看项目列表
+    @RequestMapping(value = "/findallproject/pid={}", method = RequestMethod.GET)
     public String findAllProject(Model model) {
         List<Project> list = projectService.findAllProject();
         model.addAttribute("projectList", list);
         System.out.println(list.toString());
-        return "root/user";
+        return "/root/r_projectList";
     }
-
+    //根据id查找项目信息
+    @RequestMapping(value="/findprojectbypid",method=RequestMethod.GET)
+    public String findProjectByPid(Model model,@RequestParam(name = "p_id") int pid){
+//        int pid = (Integer.parseInt(request.getParameter("p_id")));
+        System.out.println(pid);
+        Project project=projectService.findProjectByPid(pid);
+        model.addAttribute("project",project);
+        System.out.println(project.toString());
+        return "/root/r_project";
+    }
+    //删除项目信息
     @RequestMapping(value = "/deleteproject", method = RequestMethod.GET)
     public String deleteProject(HttpServletRequest request) {
-        int pId = Integer.parseInt(request.getParameter("p_Id"));
-        projectService.deleteProject(pId);
+        int pid = Integer.parseInt(request.getParameter("p_id"));
+        projectService.deleteProject(pid);
         return "redirect:root/user";
     }
+
+
 }

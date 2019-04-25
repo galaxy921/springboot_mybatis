@@ -1,7 +1,7 @@
 package com.example.enums;
 
 public enum MessageTypeEnum {
-    NOTICE(0,"公告"), FILE(1,"申报"), REPLY(2, "回复"), PROBLEM(3, "问题"), REPORT(4,"中期报告");
+    NOTICE(0,"公告"), PROBLEM(1,"问题"), REPLY(2, "回复"), FILE(3, "申报"), REPORT(4,"中期报告");
 
     private int state;
 

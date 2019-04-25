@@ -13,7 +13,7 @@ import java.util.List;
  * description
  */
 public interface UserService {
-    public boolean login(String u_no,String password,int position);
+    public void login(int uno,String password);
 
     public boolean logout();
 
@@ -23,13 +23,19 @@ public interface UserService {
 
     public int deleteUser(int uid);
 
-    public List<User> findUserByUid(int uid);
+    public User findUserByUid(int uid);
+
+    public User findUserByUno(int uno);
 
     public int updateUser(User user);
 
     public int insertUser(User user);
 
-    public void userAnalyze(int uid);
+    public void userAnalyzeTitle();
+
+    public void userAnalyzeType();
+
+    public void userAnalyzeAchieve();
 
     public void root();
 

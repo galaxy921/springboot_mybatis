@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.dao.UserDao">
-
+<!--登录 这个不用的-->
+    <select id="login"  parameterType="map"  resultType="com.example.model.User">
+		select u_no,password from user where u_no=#{u_no} and password=#{password}
+	</select>
+<!--修改个人信息-->
+    <update id="updateUser" parameterType="com.example.model.User">
+            update user
+            <set>
+                <if test="u_id!=null">u_id=#{u_id},</if>
+                <if test="u_no!=null">u_no=#{u_no},</if>
+                <if test="u_name!=null">u_name=#{u_name},</if>
+                <if test="password!=null">password=#{password},</if>
+                <if test="position!=null">position=#{position},</if>
+                <if test="email!=null">email=#{email},</if>
+                <if test="phone!=null">phone=#{phone},</if>
+            </set>
+            where u_id=#{u_id}
+        </update>
+<!--查看所有用户信息-->
     <select id="findAllUser" resultType="com.example.model.User">
-        SELECT u_id,u_no,u_name,password,position,email,phone
-        FROM user
+            SELECT u_id,u_no,u_name,password,position,email,phone
+            FROM user
+    </select>
+<!--删除用户信息-->
+    <delete id="deleteUser" >
+            DELETE FROM `user` where u_id=#{u_id}
+        </delete>
+<!--根据id查找用户信息-->
+    <select id="findUserByUid"  parameterType="map"  resultType="com.example.model.User">
+            select * from user where u_id=#{u_id}
+        </select>
+<!--根据no查找用户信息-->
+    <select id="findUserByUno"  parameterType="map"  resultType="com.example.model.User">
+            select * from user where u_no=#{u_no}
+        </select>
+<!--添加用户信息-->
+    <insert id="insertUser" parameterType="com.example.model.User" useGeneratedKeys="true" keyProperty="u_id" keyColumn="u_id">
+            INSERT INTO
+            user(u_id,u_no,u_name,password,position,email,phone)
+            VALUES
+            (#{u_id},#{u_no},#{u_name},#{password},#{position},#{email},#{phone})
+        </insert>
+<!--用户行为分析-->
+    <!--项目主题-->
+    <select id="userAnalyzeTitle" parameterType="com.example.model.User">
+            <!--使用group by-->
+    </select>
+    <!--问题类型-->
+    <select id="userAnalyzeType" parameterType="com.example.model.User">
+        <!--使用group by-->
+    </select>
+    <!--项目完成情况-->
+    <select id="userAnalyzeAchieve" parameterType="com.example.model.User">
+        <!--使用group by-->
     </select>
 
-    <delete id="deleteUser" >
-        DELETE FROM `user` where u_id=#{u_id}
-    </delete>
 
-    <insert id="insertUser" parameterType="com.example.model.User" useGeneratedKeys="true" keyProperty="u_id" keyColumn="u_id">
-		INSERT INTO
-		user(u_id,u_no,u_name,password,position,email,phone)
-		VALUES
-		(#{u_id},#{u_no},#{u_name},#{password},#{position},#{email},#{phone})
-	</insert>
 
-    <update id="updateUser" parameterType="com.example.model.User">
-        update user
-        <set>
-            <if test="u_id!=null">u_id=#{u_id},</if>
-            <if test="u_no!=null">u_no=#{u_no},</if>
-            <if test="u_name!=null">u_name=#{u_name},</if>
-            <if test="password!=null">password=#{password},</if>
-            <if test="position!=null">position=#{position},</if>
-            <if test="email!=null">email=#{email},</if>
-            <if test="phone!=null">phone=#{phone},</if>
-        </set>
-        where u_id=#{u_id}
-    </update>
 </mapper>

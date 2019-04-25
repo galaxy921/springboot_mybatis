@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.dao.NoticeDao">
-
-    <select id="findAllMessage" resultType="com.example.model.Message">
-        SELECT m_id,from_id,to_id,creat_time,m_title,m_details,m_type,m_type,m_state
-        FROM message
+<mapper namespace="com.example.dao.ProblemDao">
+<!--列出问题列表-->
+    <select id="findAllProblem" resultType="com.example.model.Message">
+        SELECT * FROM message
     </select>
-
-    <delete id="deleteMessage" >
+<!--查看问题详情-->
+    <select id="findProblemByMid" resultType="com.example.model.Message">
+        SELECT * FROM message WHERE m_id=#{m_id}
+    </select>
+<!--根据问题id查看回复-->
+    <select id="findReplyByMid" resultType="com.example.model.Message">
+        SELECT * FROM message WHERE p_id=#{m_id}
+    </select>
+<!--删除问题-->
+    <delete id="deleteProblem" >
         DELETE FROM `message` where m_id=#{m_id}
     </delete>
-
-    <insert id="insertMessage" parameterType="com.example.model.Message" useGeneratedKeys="true" keyProperty="m_id" keyColumn="m_id">
+<!--添加问题  在登录时将user放到session里 from_id==session.get？？-->
+    <insert id="addProblem" parameterType="com.example.model.Message" useGeneratedKeys="true" keyProperty="m_id" keyColumn="m_id">
 		INSERT INTO
-		message(m_id,from_id,to_id,creat_time,m_title,m_details,m_type,m_type,m_state)
+		message(m_id,from_id,to_id,create_time,m_title,m_details,m_type,m_state,p_id)
 		VALUES
-		(#{m_id},#{from_id},#{to_id},#{creat_time},#{m_title},#{m_details},#{m_type},#{m_type},#{m_state})
+		(#{m_id},#{from_id},#{to_id},#{create_time},#{m_title},#{m_details},1,2,0)
 	</insert>
-
-    <update id="updateMessage" parameterType="com.example.model.Message">
-        update message
-        <set>
-            <if test="m_id!=null">m_id=#{m_id},</if>
-            <if test="from_id!=null">from_id=#{from_id},</if>
-            <if test="to_id!=null">to_id=#{to_id},</if>
-            <if test="creat_time!=null">creat_time=#{creat_time},</if>
-            <if test="m_title!=null">m_title=#{m_title},</if>
-            <if test="m_details!=null">m_details=#{m_details},</if>
-            <if test="m_type!=null">m_type=#{m_type},</if>
-            <if test="m_state!=null">m_state=#{m_state},</if>
-        </set>
-        where m_id=#{m_id}
+<!--根据uid查找当前用户历史问题-->
+    <select id="findProblemByUid" resultType="com.example.model.Message">
+        SELECT * FROM message WHERE from_id=#{u_id}
+    </select>
+<!--回复问题-->
+    <insert id="addReply" parameterType="com.example.model.Message" useGeneratedKeys="true" keyProperty="m_id" keyColumn="m_id">
+		INSERT INTO
+		message(m_id,from_id,to_id,create_time,m_title,m_details,m_type,m_state,p_id)
+		VALUES
+		(#{m_id},#{from_id},#{to_id},#{create_time},#{m_title},#{m_details},2,#{m_state},#{m_id})
+	</insert>
+    <!--修改问题的状态-->
+    <update id="updateProblemState" parameterType="com.example.model.Message">
+        UPDATE Message SET m_state=1 WHERE m_id=#{m_id}
     </update>
+    <!--追加问题  暂时不用-->
+    <update id="againProblem" parameterType="com.example.model.Message">
+         UPDATE Message SET m_details=#{m_details},m_state=2 WHERE m_id=#{m_id}
+    </update>
+
 </mapper>

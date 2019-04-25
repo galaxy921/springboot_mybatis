@@ -1,10 +1,7 @@
 package com.example.enums;
 
-/**
- * 我发现  好像这个不需要 T T
- */
 public enum MessageStateEnum {
-    PUBLIC(0, "公告"), PRIVATE(1, "私人信息"), FINISH(2, "已解决"), NOT_RESOLVED(3, "未解决");
+    PUBLIC(0, "公开"), PRIVATE(1, "私人"), NOT_RESOLVED(2, "未解决"), FINISH(3, "已解决");
 
         private int state;
 

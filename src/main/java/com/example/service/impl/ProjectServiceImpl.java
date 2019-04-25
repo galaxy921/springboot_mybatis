@@ -27,7 +27,7 @@ public class ProjectServiceImpl implements ProjectService
     }
 
     @Override
-    public List<Project> findProjectByPid(int pid) { return projectDao.findProjectByPid(pid); }
+    public Project findProjectByPid(int pid) { return projectDao.findProjectByPid(pid); }
 
     @Override
     public void downloadReport(int pid) { }

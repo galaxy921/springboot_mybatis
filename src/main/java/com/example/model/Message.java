@@ -83,4 +83,18 @@ public class Message {
     public void setM_state(Integer m_state) {
         this.m_state = m_state;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "m_id=" + m_id +
+                ", from_id=" + from_id +
+                ", to_id=" + to_id +
+                ", create_time=" + create_time +
+                ", m_title='" + m_title + '\'' +
+                ", m_details='" + m_details + '\'' +
+                ", m_type=" + m_type +
+                ", m_state=" + m_state +
+                '}';
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -15,6 +15,14 @@
     <![endif]-->
     <style type="text/css">
         .ui-sortable .panel-header{ cursor:move}
+
+        .try{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float:left;
+        }
     </style>
     <title>系统管理员版 项目列表</title>
     <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
@@ -107,25 +115,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="col1">1XXX </td>
-                <a href="../teachers/t_project.html">
-                    <td class="col2">1XXX
-                        <a href="../root/r_project.html"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
-                    </td>
-                </a>
-            </tr>
-            <tr>
-                <td class="col1">2XXX </td>
-                <td class="col2">2XXX </td>
-            </tr>
-            <tr>
-                <td class="col1">3XXX </td>
-                <td class="col2">3XXX </td>
-            </tr>
-            <tr>
-                <td class="col1">4XXX </td>
-                <td class="col2">4XXX </td>
+            <tr th:each="project:${projectList}">
+                <td th:text="${project.p_name}" class="col1">项目名称</td>
+                <td class="col2" th:href="@{'/project/findprojectbypid'+${project.p_id}}"><div class="try" th:text="${project.p_details}">项目简介</div>
+                    <a th:href="@{'/project/findprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
+                </td>
             </tr>
             </tbody>
         </table>

@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
+ *公告的from_id=to_id=0
+ *公告的p_id=o
  *
  * @author :
  * create : 2019-04-21 10:51
@@ -23,20 +25,20 @@ public interface NoticeDao {
 
     /**
      * 查看公告详情
-     * @param uid
+     * @param mid
      * @return
      */
     List<Message> findNoticeByMid(int mid);
 
     /**
-     * 添加消息信息
+     * 添加公告信息
      * @param notice
      * @return
      */
     int addNotice(Message notice);
 
     /**
-     * 删除消息信息
+     * 删除公告信息
      * @return
      */
     int deleteNotice(int mid);

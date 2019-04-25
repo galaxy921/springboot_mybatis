@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService
     UserDao userDao;
 
     @Override
-    public boolean login(String uno, String password, int position) { return userDao.login(uno,password,position); }
+    public void login(int uno, String password) { userDao.login(uno,password); }
 
     @Override
     public boolean logout() { return userDao.logout(); }
@@ -32,15 +32,16 @@ public class UserServiceImpl implements UserService
     public int updateUserInfo(int uid) { return userDao.updateUserInfo(uid); }
 
     @Override
-    public List<User> findAllUser() {
-        return userDao.findAllUser();
-    }
+    public List<User> findAllUser() { return userDao.findAllUser(); }
 
     @Override
     public int deleteUser(int uid){return userDao.deleteUser(uid);}
 
     @Override
-    public List<User> findUserByUid(int uid) {return userDao.findUserByUid(uid);}
+    public User findUserByUid(int uid) {return userDao.findUserByUid(uid);}
+
+    @Override
+    public User findUserByUno(int uno) {return userDao.findUserByUno(uno);}
 
     @Override
     public int updateUser(User user) { return userDao.updateUser(user);}
@@ -49,7 +50,13 @@ public class UserServiceImpl implements UserService
     public int insertUser(User user) { return userDao.insertUser(user); }
 
     @Override
-    public void userAnalyze(int uid) { userDao.userAnalyze(uid); }
+    public void userAnalyzeTitle() { userDao.userAnalyzeTitle(); }
+
+    @Override
+    public void userAnalyzeType() { userDao.userAnalyzeType(); }
+
+    @Override
+    public void userAnalyzeAchieve() { userDao.userAnalyzeAchieve(); }
 
     @Override
     public void root() { userDao.root(); }

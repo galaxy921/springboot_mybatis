@@ -29,12 +29,12 @@ public class ProblemServiceImpl implements ProblemService
     }
 
     @Override
-    public List<Message> findProblemByMid(int mid) {
+    public Message findProblemByMid(int mid) {
         return messageDao.findProblemByMid(mid);
     }
 
     @Override
-    public List<Message> findReplyByMid(int mid) {
+    public Message findReplyByMid(int mid) {
         return messageDao.findReplyByMid(mid);
     }
 

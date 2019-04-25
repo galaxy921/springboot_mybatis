@@ -7,6 +7,9 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
+ * 新建的项目p_state=-1
+ *         percentage=0
+ *         score=null
  *
  * @author :
  * create : 2019-04-21 10:51
@@ -26,7 +29,7 @@ public interface ProjectDao {
      * @param pid
      * @return
      */
-    List<Project> findProjectByPid(int pid);
+    Project findProjectByPid(int pid);
 
     /**
      * 项目中期报告下载
@@ -48,7 +51,7 @@ public interface ProjectDao {
     int insertProject(Project project);
 
     /**
-     * 更新用户信息
+     * 更新项目信息
      * @param project
      * @return
      */

@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.model.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,20 +20,29 @@ public interface UserDao {
      * 用户登录
      * @return
      */
-    boolean login(String u_no,String password,int position);
+    //根据用户名和密码查询用户
+    //注解的两个参数会自动封装成map集合，括号内即为键
+    void login(@Param("u_no")int u_no,@Param("password")String password);
 
     /**
-     * 用户等出
+     * 用户登出
      * @return
      */
     boolean logout();
 
     /**
-     * 修改个人信息
+     * 修改个人信息 暂时不用
      * @param uid
      * @return
      */
     int updateUserInfo(int uid);
+
+    /**
+     * 编辑用户信息
+     * @param user
+     * @return
+     */
+    int updateUser(User user);
 
     //root
     /**
@@ -52,14 +62,14 @@ public interface UserDao {
      * @param uid
      * @return
      */
-    List<User> findUserByUid(int uid);
+    User findUserByUid(int uid);
 
     /**
-     * 编辑用户信息
-     * @param user
+     * 根据no查找用户信息
+     * @param uno
      * @return
      */
-    int updateUser(User user);
+    User findUserByUno(int uno);
 
     /**
      * 添加用户信息
@@ -69,10 +79,22 @@ public interface UserDao {
     int insertUser(User user);
 
     /**
-     * 用户行为分析
-     * @param uid
+     * 用户行为分析 项目主题
+     * @param
      */
-    void userAnalyze(int uid);
+    void userAnalyzeTitle();
+
+    /**
+     * 用户行为分析 问题类型
+     * @param
+     */
+    void userAnalyzeType();
+
+    /**
+     * 用户行为分析 项目完成情况
+     * @param
+     */
+    void userAnalyzeAchieve();
 
     /**
      * 权限设置

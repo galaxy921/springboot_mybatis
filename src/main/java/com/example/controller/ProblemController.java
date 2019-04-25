@@ -14,20 +14,20 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author : 吴亚斌
+ * @author :
  * create : 2019-04-21 11:06
  * description
  */
 //@RestController//返回json时候用
 @Controller
-@RequestMapping("/message")
+@RequestMapping("/problem")
 public class ProblemController {
     @Autowired
     ProblemService problemService;
 
     @RequestMapping(value = "/findallmessage", method = RequestMethod.GET)
     public String findAllMessage(Model model) {
-        List<Message> list = problemService.findAllMessage();
+        List<Message> list = problemService.findAllProblem();
         model.addAttribute("messageList", list);
         System.out.println(list.toString());
         return "root/user";
@@ -35,8 +35,8 @@ public class ProblemController {
 
     @RequestMapping(value = "/deletemessage", method = RequestMethod.GET)
     public String deleteMessage(HttpServletRequest request) {
-        int mId = Integer.parseInt(request.getParameter("m_Id"));
-        problemService.deleteMessage(mId);
+        int mid = Integer.parseInt(request.getParameter("m_id"));
+        problemService.deleteProblem(mid);
         return "redirect:root/user";
     }
 }

@@ -14,9 +14,9 @@ import java.util.List;
 public interface ProblemService {
     public List<Message> findAllProblem();
 
-    public List<Message> findProblemByMid(int mid);
+    public Message findProblemByMid(int mid);
 
-    public List<Message> findReplyByMid(int mid);
+    public Message findReplyByMid(int mid);
 
     public int deleteProblem(int mid);
 

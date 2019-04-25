@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.model.Message;
-import com.example.service.ProblemService;
+import com.example.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,29 +14,29 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author : 吴亚斌
+ * @author :
  * create : 2019-04-21 11:06
  * description
  */
 //@RestController//返回json时候用
 @Controller
-@RequestMapping("/message")
+@RequestMapping("/notice")
 public class NoticeController {
     @Autowired
-    ProblemService problemService;
+    NoticeService noticeService;
 
-    @RequestMapping(value = "/findallmessage", method = RequestMethod.GET)
+    @RequestMapping(value = "/findallnotice", method = RequestMethod.GET)
     public String findAllMessage(Model model) {
-        List<Message> list = problemService.findAllMessage();
-        model.addAttribute("messageList", list);
+        List<Message> list = noticeService.findAllNotice();
+        model.addAttribute("noticeList", list);
         System.out.println(list.toString());
         return "root/user";
     }
 
-    @RequestMapping(value = "/deletemessage", method = RequestMethod.GET)
+    @RequestMapping(value = "/deletenotice", method = RequestMethod.GET)
     public String deleteMessage(HttpServletRequest request) {
-        int mId = Integer.parseInt(request.getParameter("m_Id"));
-        problemService.deleteMessage(mId);
+        int mid = Integer.parseInt(request.getParameter("m_id"));
+        noticeService.deleteNotice(mid);
         return "redirect:root/user";
     }
 }

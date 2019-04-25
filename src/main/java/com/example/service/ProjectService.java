@@ -14,7 +14,7 @@ import java.util.List;
 public interface ProjectService {
     public List<Project> findAllProject();
 
-    public List<Project> findProjectByPid(int pid);
+    public Project findProjectByPid(int pid);
 
     public void downloadReport(int pid);
 
