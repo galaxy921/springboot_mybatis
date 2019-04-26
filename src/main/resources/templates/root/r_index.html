@@ -36,19 +36,19 @@
                     <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                         <ul class="cl">
                             <li class="dropDown dropDown_hover">
-                                <a href="/project/findallproject" class="dropDown_A">项目管理</a>
+                                <a th:href="@{/project/findallproject}" class="dropDown_A">项目管理</a>
                             </li>
                             <li class="dropDown dropDown_hover">
-                                <a href="../root/r_problemList.html" class="dropDown_A">问题管理</a>
+                                <a th:href="@{/problem/findallproblem}" class="dropDown_A">问题管理</a>
                             </li>
                             <li class="dropDown dropDown_hover">
                                 <a href="javascript:;" class="dropDown_A">用户管理<i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/user.html" >查看用户信息</a><!--修改放在这里 按钮-->
+                                        <a th:href="@{/user/findalluser}" >查看用户信息</a><!--修改放在这里 按钮-->
                                     </li>
                                     <li>
-                                        <a href="../root/user_add.html" >增加用户信息</a>
+                                        <a th:href="@{/user/adduser}" >增加用户信息</a>
                                     </li>
                                     <li>
                                         <!--<a href="../root/user_analyze.html" （target="_blank"）---这个是在新建的页面显示>-->
@@ -68,10 +68,10 @@
                                 </ul>
                             </li>
                             <li class="dropDown dropDown_hover " style="float: right">
-                                <a href="javascript:;" class="dropDown_A"><span th:text="${user.u_no}"/>&nbsp<span th:text="${user.u_name}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/user_info.html"  >修改个人信息</a>
+                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}"  >修改个人信息</a>
                                     </li>
                                     <li>
                                         <a href="../login.html"  >退出系统</a>
@@ -96,6 +96,7 @@
 
 </div>
 <!---------script--------->
+<script src="../../js2/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript" src="../../lib2/html5shiv.js"></script>
 <script type="text/javascript" src="../../lib2/respond.min.js"></script>

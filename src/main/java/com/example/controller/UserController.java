@@ -1,15 +1,19 @@
 package com.example.controller;
 
+import com.example.enums.UserTypeEnum;
 import com.example.model.User;
 import com.example.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,33 +40,63 @@ public class UserController {
     }
     //登录
     @RequestMapping("/login")
-    public String login(int u_no,String password,Model model){
+    public String login(int u_no,String password,Model model,HttpServletRequest request){
         System.out.println("用户登录："+u_no+password);
 //        userService.login(u_no,password);
         User user=userService.findUserByUno(u_no);
         System.out.println("这密码到底是啥呀"+user.getPassword());
         int position=user.getPosition();
         model.addAttribute("user",user);
+        request.getSession().setAttribute("userid",user.getU_id());
+        request.getSession().setAttribute("userno",user.getU_no());
+        request.getSession().setAttribute("username",user.getU_name());
+        request.getSession().setAttribute("password",user.getPassword());
+        request.getSession().setAttribute("position",user.getPosition());
+        request.getSession().setAttribute("email",user.getEmail());
+        request.getSession().setAttribute("phone",user.getPhone());
         if(password.equals(user.getPassword())&&position==0){return "/root/r_index";}
         else if(password.equals(user.getPassword())&&position==1){return "managers/m_index";}
         else if(password.equals(user.getPassword())&&position==2){return "teachers/t_index";}
         else if(password.equals(user.getPassword())&&position==3){return "students/s_index";}
         return "/404";
     }
+
     //修改个人信息
-    @RequestMapping("/updateuserinfo")
-    public String updateUserInfo(User user,Model model){
+    @RequestMapping(value = "/updateuserinfo/{uid}",method = RequestMethod.POST)
+    public String updateUserInfo(User user,Model model,@PathVariable("uid") int uid){
+        System.out.println(user.toString());
+        user.setU_id(uid);
         userService.updateUser(user);
         System.out.println("修改信息成功");
         User u=userService.findUserByUid(user.getU_id());
         System.out.println(u.toString());
         model.addAttribute("user",u);
-        return "/root/user_info";
+        return "redirect:/user/findalluser";
+    }
+    //重置密码
+    @RequestMapping(value = "/updatepassword/{uid}",method = RequestMethod.GET)
+    public String updatePassword(User user, Model model, @PathVariable("uid") int uid, @Param("old_password")String old_password, @Param("password")String password, @Param("confrim")String confrim){
+        System.out.println(user.toString());
+        String oldpassword=userService.findUserByUid(uid).getPassword();
+        System.out.println(old_password+"////"+oldpassword+"////"+confrim);
+        if(oldpassword.equals(old_password)&&password.equals(confrim)){
+            user.setU_id(uid);
+            userService.updateUser(user);
+            System.out.println("重置密码成功");
+            User u=userService.findUserByUid(user.getU_id());
+            System.out.println(u.toString());
+            model.addAttribute("user",u);
+            return "redirect:/user/findalluser";
+        }
+        else
+            return "redirect:/user/updatepassword/"+user.getU_id();
+
     }
     //查看所有用户
     @RequestMapping(value = "/findalluser", method = RequestMethod.GET)
     public String findAllUser(Model model) {
         List<User> list = userService.findAllUser();
+
         model.addAttribute("userList", list);
         System.out.println(list.toString());
         return "/root/user";
@@ -72,7 +106,7 @@ public class UserController {
     public String deleteUser(HttpServletRequest request) {
         int uId = Integer.parseInt(request.getParameter("u_Id"));
         userService.deleteUser(uId);
-        return "redirect:/root/user";
+        return "/root/user";
     }
     //修改用户信息
     @RequestMapping("/updateuser")
@@ -85,7 +119,26 @@ public class UserController {
         return "我不太懂这是个啥 jQuery？？？";
     }
     //根据id查找用户信息
+    @RequestMapping(value = "/finduserbyuid/{uid}",method = RequestMethod.GET)
+    public String findUserByUid(Model model, @PathVariable("uid") int uid){
+        System.out.println("根据id查找用户信息"+uid);
+        User user=userService.findUserByUid(uid);
+        model.addAttribute("user",user);
+        return "/root/user_info";
+    }
     //根据no查找用户信息
+    //添加用户
+    @RequestMapping(value = "/adduser")
+    public String addUser(){
+        return "/root/user_add";
+    }
     //添加用户信息
+    @RequestMapping(value = "/insertuser",method = RequestMethod.GET)
+    public String insertUser(User user,Model model){
+        System.out.println(user.toString());
+        userService.insertUser(user);
+        System.out.println("添加用户"+user.getU_no());
+        return "redirect:/user/findalluser";
+    }
     //用户行为分析
 }

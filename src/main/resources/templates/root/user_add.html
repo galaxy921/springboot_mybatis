@@ -67,10 +67,10 @@
                                 </ul>
                             </li>
                             <li class="dropDown dropDown_hover " style="float: right">
-                                <a href="javascript:;" class="dropDown_A">XXXXXX XXX<i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/user_info.html"  >修改个人信息</a>
+                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}"  >修改个人信息</a>
                                     </li>
                                     <li>
                                         <a href="../login.html"  >退出系统</a>
@@ -100,23 +100,23 @@
 <div class="panel panel-default">
     <div class="panel-header">增加用户</div>
     <div class="panel-body">
-        <form action="" method="post" class="form form-horizontal responsive" id="demoform">
+        <form th:action="@{/user/insertuser}" method="get" class="form form-horizontal responsive" id="demoform">
             <div class="row cl">
                 <label class="form-label col-xs-3">工/学号</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="userNo" id="userNo" autocomplete="off">
+                    <input type="text" class="input-text" name="u_no" id="u_no" autocomplete="off">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">真实姓名</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="userName" id="userName"  ></textarea>
+                    <input type="text" class="input-text" name="u_name" id="u_name"></textarea>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">原始密码</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="password" id="password"  ></div>
+                    <input type="text" class="input-text" name="password" id="password"></div>
             </div>
             <div class="row clearfix">
                 <label class="form-label col-xs-3">角色</label>
@@ -126,10 +126,9 @@
                             <span class="select-box">
                                 <select class="select" size="1" name="position">
                                     <option value="" selected>选择角色</option>
-                                    <option value="1">系统管理员</option>
-                                    <option value="2">校级管理员</option>
-                                    <option value="2">院级管理员</option>
-                                    <option value="3">老师</option>
+                                    <option value="0">超级管理员</option>
+                                    <option value="1">校级管理员</option>
+                                    <option value="2">指导老师</option>
                                     <option value="3">学生</option>
                                 </select>
                             </span>

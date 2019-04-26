@@ -3,7 +3,7 @@
 <mapper namespace="com.example.dao.ProblemDao">
 <!--列出问题列表-->
     <select id="findAllProblem" resultType="com.example.model.Message">
-        SELECT * FROM message
+        SELECT * FROM message WHERE m_type=1;
     </select>
 <!--查看问题详情-->
     <select id="findProblemByMid" resultType="com.example.model.Message">
@@ -11,7 +11,7 @@
     </select>
 <!--根据问题id查看回复-->
     <select id="findReplyByMid" resultType="com.example.model.Message">
-        SELECT * FROM message WHERE p_id=#{m_id}
+        SELECT * FROM message WHERE m_type=2 AND p_id=#{m_id}
     </select>
 <!--删除问题-->
     <delete id="deleteProblem" >

@@ -10,6 +10,8 @@ import java.util.List;
  * 新建的项目p_state=-1
  *         percentage=0
  *         score=null
+ *         t_id=0
+ * 当项目被终止时t_id变回0
  *
  * @author :
  * create : 2019-04-21 10:51

@@ -19,6 +19,8 @@ public class Message {
     private Integer m_type;
     //信息状态
     private Integer m_state;
+    //所属的上一条信息的id(问题和回复的对应)
+    private Integer p_id;
 
     public Integer getM_id() {
         return m_id;
@@ -84,6 +86,14 @@ public class Message {
         this.m_state = m_state;
     }
 
+    public Integer getP_id() {
+        return p_id;
+    }
+
+    public void setP_id(Integer p_id) {
+        this.p_id = p_id;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -95,6 +105,7 @@ public class Message {
                 ", m_details='" + m_details + '\'' +
                 ", m_type=" + m_type +
                 ", m_state=" + m_state +
+                ", p_id=" + p_id +
                 '}';
     }
 }

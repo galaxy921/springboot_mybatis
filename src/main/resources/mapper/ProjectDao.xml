@@ -3,8 +3,7 @@
 <mapper namespace="com.example.dao.ProjectDao">
 <!--查看所有项目-->
     <select id="findAllProject" resultType="com.example.model.Project">
-        SELECT p_id,p_name,p_details,p_file,p_report,score,percentage,p_state
-        FROM project
+        SELECT * FROM project
     </select>
 <!--根据id查找项目信息-->
     <select id="findProjectByPid" parameterType="map" resultType="com.example.model.Project">
@@ -21,9 +20,9 @@
 <!--添加项目信息-->
     <insert id="insertProject" parameterType="com.example.model.Project" useGeneratedKeys="true" keyProperty="p_id" keyColumn="p_id">
 		INSERT INTO
-		project(p_id,p_name,p_details,p_file,p_report,score,percentage,p_state)
+		project(p_id,p_name,p_details,p_file,p_report,score,percentage,p_state,create_time,u_id)
 		VALUES
-		(#{p_id},#{p_name},#{p_details},#{p_file},#{p_report},#{score},0,-1)
+		(#{p_id},#{p_name},#{p_details},#{p_file},#{p_report},#{score},0,-1,#{create_time},#{u_id})
 	</insert>
 <!--更新项目信息-->
     <update id="updateProject" parameterType="com.example.model.Project">
@@ -37,32 +36,30 @@
             <if test="score!=null">score=#{score},</if>
             <if test="percentage!=null">percentage=#{percentage},</if>
             <if test="p_state!=null">p_state=#{p_state},</if>
+            <if test="create_time!=null">create_time=#{create_time},</if>
+            <if test="u_id!=null">u_id=#{u_id},</if>
         </set>
         where p_id=#{p_id}
     </update>
 <!--删除项目信息-->
     <delete id="deleteProject" >
-        DELETE FROM `project` where p_id=#{p_id}
+        DELETE FROM `project` where m_id=#{m_id}
     </delete>
 <!--查看待审核的项目-->
     <select id="findNewProject" resultType="com.example.model.Project">
-        SELECT p_id,p_name,p_details,p_file,p_report,score,percentage,p_state
-        FROM project WHERE p_state=-1
+        SELECT * FROM project WHERE p_state=-1
     </select>
 <!--查看未分配的项目-->
     <select id="findAssignProject" resultType="com.example.model.Project">
-        SELECT p_id,p_name,p_details,p_file,p_report,score,percentage,p_state
-        FROM project WHERE p_state=0
+        SELECT * FROM project WHERE p_state=0
     </select>
 <!--查看进行中的项目-->
     <select id="findRunningProject" resultType="com.example.model.Project">
-        SELECT p_id,p_name,p_details,p_file,p_report,score,percentage,p_state
-        FROM project WHERE p_state=1
+        SELECT * FROM project WHERE p_state=1
     </select>
 <!--查看已终止的项目-->
     <select id="findStopProject" resultType="com.example.model.Project">
-        SELECT p_id,p_name,p_details,p_file,p_report,score,percentage,p_state
-        FROM project WHERE p_state=2
+        SELECT * FROM project WHERE p_state=2
     </select>
 <!--根据uid查看进行中的项目-->
     <select id="findRunningProjectByTid" resultType="com.example.model.Project">

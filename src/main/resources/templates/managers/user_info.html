@@ -42,13 +42,13 @@
                                 <a href="../managers/notice.html">公告</a>
                             </li>
                             <li class="dropDown dropDown_hover " style="float: right">
-                                <a href="javascript:;" class="dropDown_A">XXXXXX XXX<i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../managers/user_info.html">修改个人信息</a>
+                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}">修改个人信息</a>
                                     </li>
                                     <li>
-                                        <a href="../login.html">退出系统</a>
+                                        <a href="@{/user/logout}">退出系统</a>
                                     </li>
                                 </ul>
                             </li>
@@ -75,29 +75,29 @@
 <div class="panel panel-default">
     <div class="panel-header">个人信息</div>
     <div class="panel-body">
-        <form action="" method="post" class="form form-horizontal responsive" id="demoform">
+        <form th:action="@{/user/updateuserinfo}" method="post" class="form form-horizontal responsive" id="demoform">
             <div class="row cl">
-                <label class="form-label col-xs-3">工号</label>
+                <label class="form-label col-xs-3">工号:</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text disabled" disabled= "true" name="userNo" id="userNo">
+                    <input type="text" class="input-text disabled" disabled= "true" name="userNo" id="userNo" th:value="${session.userno}">
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-3">真实姓名</label>
+                <label class="form-label col-xs-3">真实姓名:</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text disabled" disabled= "true" name="userName" id="userName">
+                    <input type="text" class="input-text disabled" disabled= "true" name="userName" id="userName" th:value="${session.username}">
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-3">手机：</label>
+                <label class="form-label col-xs-3">手机:</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" autocomplete="off" placeholder="手机" name="phone" id="phone">
+                    <input type="text" class="input-text" autocomplete="off" placeholder="手机" name="phone" id="phone" th:value="${session.phone}">
                 </div>
             </div>
             <div class="row cl">
-                <label class="form-label col-xs-3">邮箱：</label>
+                <label class="form-label col-xs-3">邮箱:</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" placeholder="@" name="email" id="email" autocomplete="off">
+                    <input type="text" class="input-text" placeholder="@" name="email" id="email" autocomplete="off" th:value="${session.email}">
                 </div>
             </div>
             <div class="row cl">

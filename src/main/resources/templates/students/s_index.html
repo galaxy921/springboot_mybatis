@@ -61,10 +61,10 @@
                                 <a href="../students/notice.html">公告</a>
                             </li>
                             <li class="dropDown dropDown_hover " style="float: right">
-                                <a href="javascript:;" class="dropDown_A"><span th:text="${user.u_no}"/>&nbsp<span th:text="${user.u_name}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../students/user_info.html"  >修改个人信息</a>
+                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}"  >修改个人信息</a>
                                     </li>
                                     <li>
                                         <a href="../login.html"  >退出系统</a>

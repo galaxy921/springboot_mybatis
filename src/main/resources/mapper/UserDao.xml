@@ -7,7 +7,7 @@
 	</select>
 <!--修改个人信息-->
     <update id="updateUser" parameterType="com.example.model.User">
-            update user
+            UPDATE user
             <set>
                 <if test="u_id!=null">u_id=#{u_id},</if>
                 <if test="u_no!=null">u_no=#{u_no},</if>

@@ -1,5 +1,7 @@
 package com.example.model;
 
+import java.util.Date;
+
 public class Project {
     //ID
     private Integer p_id;
@@ -17,6 +19,12 @@ public class Project {
     private String percentage;
     //项目状态
     private Integer p_state;
+    //创建时间
+    private Date create_time;
+    //学生id
+    private Integer u_id;
+    //指导老师id
+    private  Integer t_id;
 
     public Integer getP_id() {
         return p_id;
@@ -82,6 +90,30 @@ public class Project {
         this.p_state = p_state;
     }
 
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
+    }
+
+    public Integer getU_id() {
+        return u_id;
+    }
+
+    public void setU_id(Integer u_id) {
+        this.u_id = u_id;
+    }
+
+    public Integer getT_id() {
+        return t_id;
+    }
+
+    public void setT_id(Integer t_id) {
+        this.t_id = t_id;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -93,6 +125,9 @@ public class Project {
                 ", score='" + score + '\'' +
                 ", percentage='" + percentage + '\'' +
                 ", p_state=" + p_state +
+                ", create_time=" + create_time +
+                ", u_id=" + u_id +
+                ", t_id=" + t_id +
                 '}';
     }
 }

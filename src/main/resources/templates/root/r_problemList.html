@@ -16,6 +16,14 @@
     <![endif]-->
     <style type="text/css">
         .ui-sortable .panel-header{ cursor:move}
+
+        .try{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float:left;
+        }
     </style>
     <title>系统管理员版 问题记录</title>
     <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
@@ -68,10 +76,10 @@
                                 </ul>
                             </li>
                             <li class="dropDown dropDown_hover " style="float: right">
-                                <a href="javascript:;" class="dropDown_A">XXXXXX XXX<i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/user_info.html"  >修改个人信息</a>
+                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}"  >修改个人信息</a>
                                     </li>
                                     <li>
                                         <a href="../login.html"  >退出系统</a>
@@ -111,35 +119,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="col1">1XXX</td>
-                <td class="col2">1XXX</td>
-                <td class="col3" onClick="modaldemo()">1XXX</td>
-                <td class="col4">
-                    <i class="fa fa-trash-o" onclick="layer_demo()"></i>
+            <tr th:each="problem:${problemList}">
+                <td th:text="${problem.m_title}" class="col1">问题主题</td>
+                <td th:text="${problem.create_time}" class="col2">提问时间</td>
+                <td class="col3" th:onclick="'javascript:modaldemo('+${problem.m_id}+')'" >
+                    <div class="try" th:text="${problem.m_details}" th:onclick="'javascript:modaldemo('+${problem.m_id}+')'" >问题详情</div>
                 </td>
-            </tr>
-            <tr>
-                <td class="col1">2XXX</td>
-                <td class="col2">2XXX</td>
-                <td class="col3" onClick="modaldemo()">2XXX</td>
                 <td class="col4">
-                    <i class="fa fa-trash-o" onclick="layer_demo()"></i>
-                </td>
-            </tr>
-            <tr>
-                <td class="col1">3XXX</td>
-                <td class="col2">3XXX</td>
-                <td class="col3" onClick="modaldemo()">3XXX</td>
-                <td class="col4">
-                    <i class="fa fa-trash-o" onclick="layer_demo()"></i>
+                    <i class="fa fa-trash-o" th:onclick="'layer_demo('+${problem.m_id}+')'"></i>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-<!------------------问题详情弹出框———--------------->
+<!------------------问题详情弹出框(未解决的问题)———--------------->
 <div id="modal-demo" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content radius">
@@ -152,22 +146,59 @@
                     <tbody>
                     <tr>
                         <th class="col1" style="width: 80px">提问者</th>
-                        <td class="col2">AXX</td>
+                        <td class="col2" id="from_name"></td>
                     </tr>
                     <tr>
                         <th class="col1">提问时间</th>
-                        <td class="col2">2019-03-28</td>
+                        <td class="col2" id="create_time"></td>
                     </tr>
                     <tr>
                         <th class="col1">问题详情</th>
-                        <td class="col2">XXXXXXXXXX=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</td>
+                        <td class="col2" id="probelm_details"></td>
                     </tr>
                     <tr>
                         <th class="col1">问题回复</th>
-                        <td th:if="${message.messageState==3}"></th:if>
-                            <input class="btn btn-primary size-MINI radius disabled" type="button" value="未解决"></td>
-                        <td th:if="${message.messageState==2}"></th:if>
-                            <input class="btn btn-primary size-MINI radius reply_info" type="button" value="点击查看"></td>
+                            <td><input class="btn btn-primary size-MINI radius disabled" type="button" value="未解决"></td>
+                           </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------问题详情弹出框(已解决的问题)———--------------->
+<div id="modal-demo-finish" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <div id="problem_id_finish"></div>
+                <h3 class="modal-title">问题详情</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th class="col1" style="width: 80px">提问者</th>
+                        <td class="col2" id="from_name_finish"></td>
+                    </tr>
+                    <tr>
+                        <th class="col1">提问时间</th>
+                        <td class="col2" id="create_time_finish"></td>
+                    </tr>
+                    <tr>
+                        <th class="col1">问题详情</th>
+                        <td class="col2" id="probelm_details_finish"></td>
+                    </tr>
+                    <tr>
+                        <th class="col1">问题回复</th>
+                        <!--<td><input class="btn btn-primary size-MINI radius disabled" type="button" value="未解决"></td>-->
+                        <td>
+                            <input class="btn btn-primary size-MINI radius reply_info" type="button" value="点击查看" th:onclick="javascript:reply('+${problem_id_finish}+')"/>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -180,15 +211,15 @@
                             <tbody>
                             <tr>
                                 <th class="col1" style="width: 80px">回复者</th>
-                                <td class="col2">CXX</td>
+                                <td class="col2" id="reply_name">回复者</td>
                             </tr>
                             <tr>
                                 <th class="col1">回复时间</th>
-                                <td class="col2">2019-03-29</td>
+                                <td class="col2" id="reply_create_time">回复时间</td>
                             </tr>
                             <tr>
                                 <th class="col1">回复详情</th>
-                                <td class="col2">XXXXXXXXXX=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX</td>
+                                <td class="col2" id="reply_details">回复详情</td>
                             </tr>
                             </tbody>
                         </table>
@@ -202,18 +233,20 @@
         </div>
     </div>
 </div>
+
 <!------------------删除问题确认———--------------->
 <div id="delete" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-dialog">
             <div class="modal-content radius">
                 <div class="modal-header">
+                    <div style="display: block" id="problem_id"></div>
                     <h3 class="modal-title">确认删除吗？</h3>
                     <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
                 </div>
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-                    <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="确定">
+                    <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="确定" th:onclick="javascript:delete_problem('+${problem_id}+')">
                 </div>
             </div>
         </div>
@@ -221,6 +254,7 @@
 </div>
 
 <!--------script--------->
+<script type="text/javascript" src="../../js2/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript" src="../../lib2/html5shiv.js"></script>
 <script type="text/javascript" src="../../lib2/respond.min.js"></script>
@@ -231,7 +265,9 @@
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/messages_zh.min.js"></script>
+
 <script>
+    //收缩框框
     $(function() {
         $(".panel").Huifold({
             titCell:'.panel-header',
@@ -241,21 +277,84 @@
             className:"selected",
             speed:"first",
         });
-
     });
-    //弹窗
-    function layer_demo(){
-        $("#delete").modal("show");
+    //删除问题模态框
+    function layer_demo(id){
+        $.ajax({
+        data: {mid: id},
+            success: function (data) {
+                $('#problem_id').text(data.m_id);
+                // $('#problem_state').text(data.m_state);
+                $("#delete").modal("show");
+        }
+    });
     }
-    //弹窗
-    function modaldemo(){
-        $("#modal-demo").modal("show");
-    }
-    $(document).ready(function(){
-        $(".reply_info").click(function(){
-            $("#reply").slideToggle();
+    //调用后台删除方法
+    function delete_problem(id){
+        $.ajax({
+            type: "GET",
+            data: {mid: id},
+            url: "/problem/deleteproblem",
         });
-    });
+    }
+    //问题详情模态框
+    function modaldemo(id){
+        // $("#modal-demo").modal("show");
+        $.ajax({
+            type: "GET",
+            data: {mid: id},
+            url: "/problem/findproblembymid",
+            dataType : "json",
+            success: function (data) {
+                if (data) {
+                    // 成功后开启模态框
+                    $('#problem_state').text(data.m_state);
+                    if(data.m_state==2){
+                        $('#from_name').text(data.from_id);
+                        $('#create_time').text(data.create_time);
+                        $('#probelm_details').text(data.m_details);
+                        $('#problem_id').text(data.m_id);
+                        $("#modal-demo").modal('show');
+                    }else if(data.m_state==3){
+                        $('#from_name_finish').text(data.from_id);
+                        $('#create_time_finish').text(data.create_time);
+                        $('#probelm_details_finish').text(data.m_details);
+                        $('#problem_id_finish').text(data.m_id);
+                        $("#modal-demo-finish").modal('show');
+                    }
+                    // success:showQuery(data);
+                } else {
+                    alert("查找失败");
+                }
+            }
+        });
+    }
+    //查看回复框框
+        function reply(id){
+        $.ajax({
+            type: "GET",
+            data: {mid: id},
+            url: "/problem/findreplybymid",
+            dataType : "json",
+            success: function (data) {
+                if (data) {
+                    // 成功后开启模态框
+                    $('#reply_id').text(data.m_id);
+                    $('#reply_name').text(data.from_id);
+                    $('#reply_create_time').text(data.create_time);
+                    $('#reply_details').text(data.m_details);
+                    // $('#reply_id').text(data.m_id);
+                    $(".reply_info").click(function(){
+                        $("#reply").slideToggle();
+                    });
+                }
+                else {
+                    alert("查找失败");
+                }
+            }
+        });
+    }
+
 </script>
 </body>
 </html>

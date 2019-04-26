@@ -42,10 +42,10 @@
                                 <a href="../managers/notice.html">公告</a>
                             </li>
                             <li class="dropDown dropDown_hover " style="float: right">
-                                <a href="javascript:;" class="dropDown_A">XXXXXX XXX<i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../managers/user_info.html" target="_blank">修改个人信息</a>
+                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}"  >修改个人信息</a>
                                     </li>
                                     <li>
                                         <a href="../login.html" target="_blank">退出系统</a>
@@ -109,7 +109,7 @@
 
                 <tbody>
                 <tr>
-                    <th class="col1">项目指导老师</th>
+                    <th class="col1" style="width: 30%">项目指导老师</th>
                     <td th:if="${project.projectState==3}"></th:if>
                         <span class="select-box" style="width: 60%">
                             <select class="select" size="1" name="userName">
@@ -156,7 +156,7 @@
             <table class="table table-border table-bordered table-striped mt-20">
                 <tbody>
                 <tr>
-                    <th class="col1">项目评分</th>
+                    <th class="col1" style="width: 30%">项目评分</th>
                     <td class="col2">
                         <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
                         <strong id="result-1" class="f-l va-m"></strong>

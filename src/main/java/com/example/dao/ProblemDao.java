@@ -9,7 +9,7 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * 第一个问题的p_id是0
  * 第一次回复的p_id是问题的id
- * 追加问题的p_id是回复的id
+ * 追加问题的p_id是原先问题的id
  * 第二次回复的p_id是追加问题的id
  *
  *
