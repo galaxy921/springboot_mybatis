@@ -14,7 +14,7 @@ import java.util.List;
 public interface NoticeService {
     public List<Message> findAllNotice();
 
-    public List<Message> findNoticeByMid(int mid);
+    public Message findNoticeByMid(int mid);
 
     public int addNotice(Message notice);
 

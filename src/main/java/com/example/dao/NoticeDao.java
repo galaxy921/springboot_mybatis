@@ -28,7 +28,7 @@ public interface NoticeDao {
      * @param mid
      * @return
      */
-    List<Message> findNoticeByMid(int mid);
+    Message findNoticeByMid(int mid);
 
     /**
      * 添加公告信息

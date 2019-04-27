@@ -2,13 +2,16 @@ package com.example.controller;
 
 import com.example.model.Message;
 import com.example.service.NoticeService;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,19 +27,41 @@ import java.util.List;
 public class NoticeController {
     @Autowired
     NoticeService noticeService;
-
+    //查看所有公告
     @RequestMapping(value = "/findallnotice", method = RequestMethod.GET)
     public String findAllMessage(Model model) {
         List<Message> list = noticeService.findAllNotice();
         model.addAttribute("noticeList", list);
         System.out.println(list.toString());
-        return "root/user";
+        return "/root/notice";
     }
-
+    //查看公告详情m_id
+    @RequestMapping(value = "/findnoticebymid",method = RequestMethod.GET)
+    @ResponseBody
+    public Message findProblemdByMid(int mid) throws JSONException {
+        System.out.println("根据id查找公告信息"+mid);
+        Message reply=noticeService.findNoticeByMid(mid);
+        return reply;
+    }
+    //删除公告
     @RequestMapping(value = "/deletenotice", method = RequestMethod.GET)
-    public String deleteMessage(HttpServletRequest request) {
-        int mid = Integer.parseInt(request.getParameter("m_id"));
+    public String deleteMessage(int mid) {
         noticeService.deleteNotice(mid);
-        return "redirect:root/user";
+        return "redirect:/notice/findallnotice";
+    }
+    //发布公告
+    @RequestMapping(value = "/addnotice")
+    public String addNotice(){
+        return "/root/notice_add";
+    }
+    //添加公告
+    @RequestMapping(value = "/insertnotice",method = RequestMethod.GET)
+    @Deprecated
+    public String addProblem(Message notice,Model model){
+        System.out.println(notice.toString());
+        notice.setCreate_time(new Date());
+        noticeService.addNotice(notice);
+        System.out.println("添加问题"+notice.toString());
+        return "redirect:/notice/findallnotice";
     }
 }

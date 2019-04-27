@@ -100,22 +100,22 @@
 <div class="panel panel-default">
     <div class="panel-header">发布公告</div>
     <div class="panel-body">
-        <form action="" method="post" class="form form-horizontal responsive" id="demoform">
+        <form th:action="@{/notice/insertnotice}" method="get" class="form form-horizontal responsive" id="demoform">
             <div class="row cl">
                 <label class="form-label col-xs-3">公告主题</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="porjectName" id="porjectName" autocomplete="off">
+                    <input type="text" class="input-text" name="m_title" id="m_title" autocomplete="off">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">公告简述</label>
                 <div class="formControls col-xs-8">
-                    <textarea cols="" rows="" class="textarea" name="porjectDetails" id="porjectDetails"  placeholder="简述项目创新点、实用性、实现功能"></textarea>
+                    <textarea cols="" rows="" class="textarea" name="m_details" id="m_details"  placeholder="简述项目创新点、实用性、实现功能"></textarea>
                 </div>
             </div>
             <div class="row cl">
                 <div class="col-xs-8 col-xs-offset-3">
-                    <input class="btn btn-primary" type="submit" value="&nbsp;&nbsp;发&nbsp;&nbsp;布&nbsp;&nbsp;">
+                    <input class="btn btn-primary" type="submit" value="&nbsp;&nbsp;发&nbsp;&nbsp;布&nbsp;&nbsp;" >
                 </div>
             </div>
         </form>
@@ -123,6 +123,7 @@
 </div>
 
 <!--------script--------->
+<script type="text/javascript" src="../../js2/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript" src="../../lib2/html5shiv.js"></script>
 <script type="text/javascript" src="../../lib2/respond.min.js"></script>
@@ -133,6 +134,9 @@
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/messages_zh.min.js"></script>
+<script>
+
+</script>
 </body>
 </html>
 <!--H-ui前端框架提供前端技术支持 h-ui.net @2017-01-01 -->

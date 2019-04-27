@@ -20,25 +20,25 @@ public class NoticeServiceImpl implements NoticeService
 
 {
     @Autowired
-    NoticeDao messageDao;
+    NoticeDao noticeDao;
 
     @Override
     public List<Message> findAllNotice() {
-        return messageDao.findAllNotice();
+        return noticeDao.findAllNotice();
     }
 
     @Override
-    public List<Message> findNoticeByMid(int mid) {
-        return messageDao.findNoticeByMid(mid);
+    public Message findNoticeByMid(int mid) {
+        return noticeDao.findNoticeByMid(mid);
     }
 
     @Override
     public int addNotice(Message notice) {
-        return messageDao.addNotice(notice);
+        return noticeDao.addNotice(notice);
     }
 
     @Override
     public int deleteNotice(int mid) {
-        return messageDao.deleteNotice(mid);
+        return noticeDao.deleteNotice(mid);
     }
 }

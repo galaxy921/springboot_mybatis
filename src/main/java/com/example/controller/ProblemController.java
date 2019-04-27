@@ -74,9 +74,32 @@ public class ProblemController {
         return reply;
     }
     //添加问题
-    //根据uid查找当前用户问题
+    @RequestMapping(value = "/addproblem",method = RequestMethod.GET)
+    public String addProblem(Message problem,Model model){
+        System.out.println(problem.toString());
+        problemService.addProblem(problem);
+        System.out.println("添加问题"+problem.getM_id());
+        return "redirect:/root/r_problemList";
+    }
+    //根据uid查找当前用户历史问题
+    @RequestMapping(value = "/findproblembyuid/{uid}", method = RequestMethod.GET)
+    public String findProblemByUid(Model model, @PathVariable("uid") int uid) {
+        List<Message> list = problemService.findProblemByUid(uid);
+        model.addAttribute("problemList", list);
+        System.out.println(list.toString());
+        return "/students/problemList";
+    }
     //回复问题
+    @RequestMapping(value = "/addreply",method = RequestMethod.GET)
+    public String addReply(Message reply,Model model){
+        System.out.println(reply.toString());
+        problemService.addReply(reply);
+        System.out.println("添加问题"+reply.getM_id());
         //修改问题状态
+        problemService.updateProblemState(reply.getM_id());
+        return "redirect:/root/r_problemList";
+    }
+
 
     //删除问题  应该有级联删除    ****
     @RequestMapping(value = "/deleteproblem", method = RequestMethod.GET)

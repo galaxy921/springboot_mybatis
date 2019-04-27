@@ -1,16 +1,15 @@
 package com.example.controller;
 
 import com.example.enums.UserTypeEnum;
+import com.example.model.Message;
 import com.example.model.User;
 import com.example.service.UserService;
 import org.apache.ibatis.annotations.Param;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,7 +59,6 @@ public class UserController {
         else if(password.equals(user.getPassword())&&position==3){return "students/s_index";}
         return "/404";
     }
-
     //修改个人信息
     @RequestMapping(value = "/updateuserinfo/{uid}",method = RequestMethod.POST)
     public String updateUserInfo(User user,Model model,@PathVariable("uid") int uid){
@@ -96,17 +94,16 @@ public class UserController {
     @RequestMapping(value = "/findalluser", method = RequestMethod.GET)
     public String findAllUser(Model model) {
         List<User> list = userService.findAllUser();
-
         model.addAttribute("userList", list);
         System.out.println(list.toString());
         return "/root/user";
     }
     //删除用户
     @RequestMapping(value = "/deleteuser", method = RequestMethod.GET)
-    public String deleteUser(HttpServletRequest request) {
-        int uId = Integer.parseInt(request.getParameter("u_Id"));
-        userService.deleteUser(uId);
-        return "/root/user";
+    public String deleteUser(HttpServletRequest request,int uid) {
+        System.out.println("删除呀呀呀呀呀");
+        userService.deleteUser(uid);
+        return "redirect:/user/findalluser";
     }
     //修改用户信息
     @RequestMapping("/updateuser")
@@ -141,4 +138,13 @@ public class UserController {
         return "redirect:/user/findalluser";
     }
     //用户行为分析
+    //查看问题详情m_id
+    @RequestMapping(value = "/finduser",method = RequestMethod.GET)
+    @ResponseBody
+    public User findUserByMid(int uid) throws JSONException {
+        System.out.println("根据id查找用户信息"+uid);
+        User user=userService.findUserByUid(uid);
+        System.out.println(user.toString());
+        return user;
+    }
 }

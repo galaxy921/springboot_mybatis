@@ -26,7 +26,7 @@
 	</insert>
 <!--根据uid查找当前用户历史问题-->
     <select id="findProblemByUid" resultType="com.example.model.Message">
-        SELECT * FROM message WHERE from_id=#{u_id}
+        SELECT * FROM message WHERE m_type=2 AND from_id=#{u_id}
     </select>
 <!--回复问题-->
     <insert id="addReply" parameterType="com.example.model.Message" useGeneratedKeys="true" keyProperty="m_id" keyColumn="m_id">

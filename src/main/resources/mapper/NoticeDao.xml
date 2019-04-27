@@ -3,7 +3,7 @@
 <mapper namespace="com.example.dao.NoticeDao">
 <!--列出公告列表-->
     <select id="findAllNotice" resultType="com.example.model.Message">
-        SELECT * FROM message
+        SELECT * FROM message WHERE m_type=0
     </select>
 <!--查看公告详情-->
     <select id="findNoticeByMid" resultType="com.example.model.Message">

@@ -120,14 +120,17 @@
                 <td th:text="${user.u_no}" class="col2">工/学号</td>
                 <td th:text="${user.u_name}" class="col3">真实姓名</td>
                 <!--<td th:text="${UserTypeEnum.stateOf(user.getPosition()).getStateInfo()}" class="col4">角色</td>-->
-                <td th:text="${user.position}" class="col4">角色</td>
+                <td class="col4" th:if="${user.position==0}"></th:if>系统管理员</td>
+                <td class="col4" th:if="${user.position==1}"></th:if>校级管理员</td>
+                <td class="col4" th:if="${user.position==2}"></th:if>指导老师</td>
+                <td class="col4" th:if="${user.position==3}"></th:if>学生</td>
                 <td th:text="${user.email}" class="col5">邮箱</td>
                 <td th:text="${user.phone}" class="col6">电话</td>
                 <td class="col7">
-                    <!--<a class="like" href="javascript:void(0)" title="Like" th:onclick="'selectNumber(\''+${user.u_id}+'\',\''+${user.u_no}+'\',\''+${user.u_name}+'\',\''+${user.password}+'\',\''+${user.position}+'\',\''+${user.email}+'\',\''+${user.phone}+'\');'"-->
-                       <!--data-toggle="modal" data-target="#myModal1"><i class="fa fa-edit userupdate"></i></a>-->
-                    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                    <!--<a th:href="'/user/deleteUser?id='+${user.u_id}" class="like" href="javascript:void(0)" title="Like" th:onclick="'deleteNumber(\''+${user.u_id}+'\');'"><i class="fa fa-trash-o" onclick="layer_demo()"></i></a>-->
+                    <a class="like" href="javascript:void(0)" title="Like" th:onclick="'javascript:modaldemo('+${user.u_id}+')'"
+                       data-toggle="modal" data-target="#myModal1"><i class="fa fa-edit userupdate"></i></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="like" href="javascript:void(0)" title="Like"><i class="fa fa-trash-o" th:onclick="'javascript:layer_demo('+${user.u_id}+')'"></i></a>
                 </td>
             </tr>
             </tbody>
@@ -141,35 +144,37 @@
 <!------------------修改用户信息———--------------->
 <div class="panel panel-default" id="update" style="display: none;">
     <div class="panel-header">修改信息</div>
+    <div id="user_id"></div>
     <div class="panel-body">
         <form action="" method="post" class="form form-horizontal responsive" id="demoform">
             <div class="row cl">
                 <label class="form-label col-xs-3">工/学号</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="userNo" id="userNo" autocomplete="off">
+                    <input type="text" class="input-text" name="u_no" id="u_no" autocomplete="off">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">真实姓名</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="userName" id="userName"  ></textarea>
+                    <input type="text" class="input-text" name="u_name" id="u_name" value=""/>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">密码</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="password" id="password"></div>
+                    <input type="text" class="input-text" name="password" id="password" value=""></div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">邮箱</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="email" id="email"  ></textarea>
+                    <input type="text" class="input-text" name="email" id="email" value=""/>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">电话</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text" name="phone" id="phone"></div>
+                    <input type="text" class="input-text" name="phone" id="phone" value=""/>
+                </div>
             </div>
             <div class="row clearfix">
                 <label class="form-label col-xs-3">角色</label>
@@ -177,11 +182,9 @@
                     <div class="row clearfix" style="margin-top:0">
                         <div class="col-xs-6">
                             <span class="select-box">
-                                <select class="select" size="1" name="position">
-                                    <option value="" selected>选择角色</option>
+                                <select class="select" size="1" name="position" id="position">
                                     <option value="1">系统管理员</option>
                                     <option value="2">校级管理员</option>
-                                    <option value="2">院级管理员</option>
                                     <option value="3">老师</option>
                                     <option value="3">学生</option>
                                 </select>
@@ -209,7 +212,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-                    <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="确定">
+                    <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="确定" th:onclick="'javascript:delete_user()'">
                 </div>
             </div>
         </div>
@@ -217,6 +220,7 @@
 </div>
 
 <!--------script--------->
+<script type="text/javascript" src="../../js2/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>
 <script type="text/javascript" src="../../lib2/html5shiv.js"></script>
 <script type="text/javascript" src="../../lib2/respond.min.js"></script>
@@ -239,33 +243,55 @@
         });
 
     });
-    //弹窗
-    function layer_demo(){
-        $("#delete").modal("show");
-    }
-    $(document).ready(function(){
-        $(".userupdate").click(function(){
-            $("#update").slideToggle();
-        });
-    });
-    //传数据的好像是 T T
-    function selectNumber(u_id,u_no,u_name,password,position,email,phone) {
-        //默认选中
-        var num = $("#select1").find("option");
-        for (var j = 0; j < num.length; j++) {
-            if ($(num[j]).val() == (u_id)) {
-                num[j].selected = true;
-                break;
+    //删除问题模态框
+    function layer_demo(id){
+        $.ajax({
+            // data: {mid: id},
+            success: function () {
+                $('#user_id').text(id);
+                // document.getElementById("problem_id").value=id;
+                // $('#problem_state').text(data.m_state);
+                $("#delete").modal("show");
             }
-        }
-        //默认显示
-        $("#u_id").val(u_id);
-        $("#u_id").attr("value", u_id);
-        $("#u_no").val(u_no);
-        $("#u_no").attr("value", u_no);
-        $("#u_name").val(u_name);
+        });
     }
+    //调用后台删除方法
+    function delete_user(){
+        var id=document.getElementById("user_id").innerHTML;
+        alert(id);
+        $.ajax({
+            type: "GET",
+            // data: {uid: id},
+            url: "/user/deleteuser",
+        });
 
+    }
+    //问题详情模态框
+    function modaldemo(id){
+        // $("#modal-demo").modal("show");
+        $.ajax({
+            type: "GET",
+            data: {uid: id},
+            url: "/user/finduser",
+            dataType : "json",
+            success: function (data) {
+                if (data) {
+                    // 成功后开启模态框
+                    $('#user_id').attr("value",data.u_id);
+                    $('#u_no').attr("value",data.u_no);
+                    $('#u_name').attr("value",data.u_name);
+                    $('#password').attr("value",data.password);
+                    $('#position').attr("value",data.position);
+                    $('#email').attr("value",data.email);
+                    $('#phone').attr("value",data.phone);
+                    document.getElementById("position")[data.position].selected=true;
+                    $(".userupdate").click(function(){
+                        $("#update").slideToggle();
+                    });
+                }
+            }
+        });
+    }
     function deleteNumber(id) {
         alert(id)
     }

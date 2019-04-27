@@ -57,4 +57,7 @@ public class ProblemServiceImpl implements ProblemService
     public int addReply(Message reply) {
         return messageDao.addReply(reply);
     }
+
+    @Override
+    public void updateProblemState(int mid) { messageDao.updateProblemState(mid);}
 }

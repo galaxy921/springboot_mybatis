@@ -105,7 +105,7 @@
     </div>
 
 </div>
-<!-----------------问题记录-———--------------->
+<!-----------------问题列表-———--------------->
 <div class="panel panel-default mt-20">
     <div  class="panel-header" >问题记录</div>
     <div class="panel-body" style="display: block;">
@@ -126,7 +126,7 @@
                     <div class="try" th:text="${problem.m_details}" th:onclick="'javascript:modaldemo('+${problem.m_id}+')'" >问题详情</div>
                 </td>
                 <td class="col4">
-                    <i class="fa fa-trash-o" th:onclick="'layer_demo('+${problem.m_id}+')'"></i>
+                    <i class="fa fa-trash-o" th:onclick="'javascript:layer_demo('+${problem.m_id}+')'"></i>
                 </td>
             </tr>
             </tbody>
@@ -197,7 +197,7 @@
                         <th class="col1">问题回复</th>
                         <!--<td><input class="btn btn-primary size-MINI radius disabled" type="button" value="未解决"></td>-->
                         <td>
-                            <input class="btn btn-primary size-MINI radius reply_info" type="button" value="点击查看" th:onclick="javascript:reply('+${problem_id_finish}+')"/>
+                            <input class="btn btn-primary size-MINI radius reply_info" type="button" value="点击查看" th:onclick="'javascript:reply()'">
                         </td>
                     </tr>
                     </tbody>
@@ -223,6 +223,7 @@
                             </tr>
                             </tbody>
                         </table>
+                        <button class="btn btn-primary size-MINI radiun reply_info" th:onclick="close_reply()">关闭</button>
                     </div>
                 </div>
 
@@ -233,26 +234,24 @@
         </div>
     </div>
 </div>
-
 <!------------------删除问题确认———--------------->
 <div id="delete" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-dialog">
             <div class="modal-content radius">
                 <div class="modal-header">
-                    <div style="display: block" id="problem_id"></div>
+                    <div id="problem_id" style="display: none"></div>
                     <h3 class="modal-title">确认删除吗？</h3>
                     <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
                 </div>
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-                    <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="确定" th:onclick="javascript:delete_problem('+${problem_id}+')">
+                    <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="确定" th:onclick="'javascript:delete_problem()'">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <!--------script--------->
 <script type="text/javascript" src="../../js2/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>
@@ -281,21 +280,25 @@
     //删除问题模态框
     function layer_demo(id){
         $.ajax({
-        data: {mid: id},
-            success: function (data) {
-                $('#problem_id').text(data.m_id);
+        // data: {mid: id},
+            success: function () {
+                $('#problem_id').text(id);
+                // document.getElementById("problem_id").value=id;
                 // $('#problem_state').text(data.m_state);
                 $("#delete").modal("show");
         }
     });
     }
     //调用后台删除方法
-    function delete_problem(id){
+    function delete_problem(){
+        var id=document.getElementById("problem_id").innerHTML;
+        // alert(id);
         $.ajax({
             type: "GET",
             data: {mid: id},
             url: "/problem/deleteproblem",
         });
+
     }
     //问题详情模态框
     function modaldemo(id){
@@ -330,7 +333,9 @@
         });
     }
     //查看回复框框
-        function reply(id){
+    function reply(){
+        var id=document.getElementById("problem_id_finish").innerHTML;
+        // alert(id);
         $.ajax({
             type: "GET",
             data: {mid: id},
@@ -339,14 +344,13 @@
             success: function (data) {
                 if (data) {
                     // 成功后开启模态框
+                    $(".reply_info").click(function(){
+                        $("#reply").slideToggle();
+                    });
                     $('#reply_id').text(data.m_id);
                     $('#reply_name').text(data.from_id);
                     $('#reply_create_time').text(data.create_time);
                     $('#reply_details').text(data.m_details);
-                    // $('#reply_id').text(data.m_id);
-                    $(".reply_info").click(function(){
-                        $("#reply").slideToggle();
-                    });
                 }
                 else {
                     alert("查找失败");
@@ -354,7 +358,16 @@
             }
         });
     }
-
+    //关闭回复的框框
+    function close_reply(){
+        $.ajax({
+            success: function (data) {
+            // 成功后开启模态框
+            $(".reply_info").click(function(){
+                $("#reply").slideToggle();});
+            }
+        });
+    }
 </script>
 </body>
 </html>

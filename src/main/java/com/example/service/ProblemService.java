@@ -25,4 +25,6 @@ public interface ProblemService {
     public List<Message> findProblemByUid(int uid);
 
     public int addReply(Message reply);
+
+    public void updateProblemState(int mid);
 }
