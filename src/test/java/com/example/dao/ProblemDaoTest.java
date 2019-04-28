@@ -41,7 +41,7 @@ public class ProblemDaoTest extends BaseTest {
         System.out.println(dao.addProblem(problem));
     }
     @Test
-    public void findProblemByUid(){ System.out.println(dao.findProblemByUid(1).toString()); }
+    public void findProblemByUid(){ System.out.println(dao.findProblemByUid(7).toString()); }
     @Test
     public void addReply() {
         Message reply=new Message();
@@ -66,5 +66,9 @@ public class ProblemDaoTest extends BaseTest {
         String details=dao.findProblemByMid(6).getM_details();
         String details1=details+"/"+details2;
         dao.againProblem(details1,6);
+    }
+    @Test
+    public void newProblemCount(){
+        System.out.println(dao.newProblemCount());
     }
 }

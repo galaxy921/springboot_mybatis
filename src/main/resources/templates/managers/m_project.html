@@ -15,6 +15,13 @@
     <![endif]-->
     <style type="text/css">
         .ui-sortable .panel-header{ cursor:move}
+        .try{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float:left;
+        }
     </style>
     <title>管理员版 项目详情</title>
     <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
@@ -70,68 +77,68 @@
         </nav>
     </div>
 </div>
+
 <!------------------项目详情的列表-------------->
 <div class="panel panel-default mt-20">
     <div  class="panel-header" >项目详情</div>
     <div class="panel-body" style="display: block;">
         <table class="table table-border table-bordered table-striped mt-20">
-
             <tbody>
             <tr>
                 <th class="col1" style="width: 30%">项目名称</th>
-                <td class="col2">XXXXXXXX</td>
+                <td class="col2" th:text="${project.p_name}">项目名称</td>
             </tr>
             <tr>
-                <th class="col1">项目发布时间</th>
-                <td class="col2">XXXXXXXXXX</td>
+                <th class="col1">项目简述</th>
+                <td class="col2" th:text="${project.p_details}"> 项目简述
+                </td>
             </tr>
             <tr>
                 <th class="col1">项目审核报告</th>
-                <td class="col2">项目状态<input type="button" class="btn btn-primary-outline size-MINI radius" value="&nbsp;&nbsp;下载&nbsp;&nbsp;">
+                <td class="col2" th:if="${file.equals('已上传')}"></th:if>已上传
+                    <input type="button" class="btn btn-primary-outline size-MINI radius" value="&nbsp;&nbsp;下载&nbsp;&nbsp;">
                 </td>
+                <td class="col2" th:if="${file.equals('未上传')}"></th:if>未上传</td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div th:if="${project.projectState==-1}"></th:if>
+    <div th:if="${project.p_state==-1}"></th:if>
         <input type="button" class="btn btn-primary-outline size-M radius" style="margin-left:90%;margin-bottom: 10px;" value="&nbsp;&nbsp;待审核&nbsp;&nbsp;">
     </div>
-    <div th:if="${project.projectState==2}"></th:if>
-        <input type="button" class="btn btn-primary-outline size-M radius assignporject" style="margin-left:90%;margin-bottom: 10px;" value="&nbsp;&nbsp;项目分配&nbsp;&nbsp;">
+    <div th:if="${project.p_state==0}"></th:if>
+        <input type="button" class="btn btn-primary-outline size-M radius" style="margin-left:90%;margin-bottom: 10px;" value="&nbsp;&nbsp;未分配&nbsp;&nbsp;">
+    </div>
+    <div th:if="${project.p_state==-2}"></th:if>
+        <input type="button" class="btn btn-danger-outline size-M radius" style="margin-left:90%;margin-bottom: 10px;" value="&nbsp;&nbsp;已终止&nbsp;&nbsp;">
     </div>
 </div>
-<div id="assign" style="display: none;">
+<div id="assign" style="display: block;" th:if="${project.p_state!=0&&project.p_state!=-2&&project.p_state!=-1&&project.t_id!=0}"></th:if>
     <!------------------项目分配的列表-------------->
     <div class="panel panel-default mt-20" >
         <div  class="panel-header" >项目分配</div>
         <div class="panel-body" >
             <table class="table table-border table-bordered table-striped mt-20">
-
                 <tbody>
                 <tr>
                     <th class="col1" style="width: 30%">项目指导老师</th>
-                    <td th:if="${project.projectState==3}"></th:if>
-                        <span class="select-box" style="width: 60%">
-                            <select class="select" size="1" name="userName">
-                                <option value="" selected>选择老师</option>
-                                <option value="1">AXX</option>
-                                <option value="2">BXX</option>
-                                <option value="3">CXX</option>
-                            </select>
-                        </span>
-                        <input class="btn btn-primary-outline size-MINI radius" type="button" value="分配">
-                    </td>
-                    <td th:if="${project.projectState!=3}" class="col2">XXX</td></th:if>
+                    <td class="col2" th:text="${teacher.u_name}">项目指导老师</td>
                 </tr>
                 <tr>
-                    <th class="col1">联系方式</th>
-                    <td class="col2">XXXXXXXXX</td>
+                    <th class="col1">联系方式(电话)</th>
+                    <td class="col2" th:text="${teacher.phone}">联系方式</td>
+                </tr>
+                <tr>
+                    <th class="col1">联系方式(邮箱)</th>
+                    <td class="col2" th:text="${teacher.email}">联系方式</td>
                 </tr>
                 <tr>
                     <th class="col1">项目中期报告 </th>
-                    <td class="col2">
-                        <input type="button" class="btn btn-primary-outline size-MINI radius disabled" style="display:none;" value="&nbsp;&nbsp;不可下载&nbsp;&nbsp;">
+                    <td class="col2"  th:if="${file.equals('已上传')}"></th:if>
                         <input type="button" class="btn btn-primary-outline size-MINI radius" value="&nbsp;&nbsp;下载&nbsp;&nbsp;">
+                    </td>
+                    <td class="col2"  th:if="${file.equals('未上传')}"></th:if>
+                        <input type="button" class="btn btn-primary-outline size-MINI radius disabled" value="&nbsp;&nbsp;不可下载&nbsp;&nbsp;">
                     </td>
                 </tr>
                 </tbody>
@@ -144,7 +151,7 @@
         <div class="panel-body">
             <div class="progress radius" style="margin-left: 10%">
                 <div class="progress-bar">
-                    <span class="sr-only" data-toggle="tooltip" data-placement="top" title="25%" style="width:25%"></span>
+                    <span class="sr-only" data-toggle="tooltip" data-placement="top" th:title="${percentage}" th:style="'width:'+${percentage}"></span>
                 </div>
             </div>
         </div>
@@ -153,20 +160,26 @@
     <div class="panel panel-default mt-20">
         <div class="panel-header">项目评分</div>
         <div class="panel-body">
-            <table class="table table-border table-bordered table-striped mt-20">
-                <tbody>
-                <tr>
-                    <th class="col1" style="width: 30%">项目评分</th>
-                    <td class="col2">
-                        <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
-                        <strong id="result-1" class="f-l va-m"></strong>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="clearfix">
+                <table class="table table-border table-bordered table-striped mt-20">
+                    <tbody>
+                    <tr>
+                        <th class="col1" style="width: 30%">项目评分</th>
+                        <td class="col2" th:if="${project.p_state!=2}"></th:if>
+                            未评分
+                        </td>
+                        <td th:if="${project.p_state==2}"></th:if>
+                            80
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
+
 <!------------------script----------------->
 <script type="text/javascript" src="../../js2/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>

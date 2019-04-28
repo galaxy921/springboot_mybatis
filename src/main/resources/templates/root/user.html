@@ -61,7 +61,7 @@
                                 <a href="javascript:;" class="dropDown_A">公告管理<i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/notice.html">查看公告</a><!--删除公告放在这里 按钮-->
+                                        <a href="notice.html">查看公告</a><!--删除公告放在这里 按钮-->
                                     </li>
                                     <li>
                                         <a href="../root/notice_add.html">发布公告</a>
@@ -127,8 +127,7 @@
                 <td th:text="${user.email}" class="col5">邮箱</td>
                 <td th:text="${user.phone}" class="col6">电话</td>
                 <td class="col7">
-                    <a class="like" href="javascript:void(0)" title="Like" th:onclick="'javascript:modaldemo('+${user.u_id}+')'"
-                       data-toggle="modal" data-target="#myModal1"><i class="fa fa-edit userupdate"></i></a>
+                    <a class="like" href="javascript:void(0)" title="Like" th:onclick="'javascript:modaldemo('+${user.u_id}+')'" data-toggle="modal" data-target="#myModal1"><i class="fa fa-edit userupdate"></i></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a class="like" href="javascript:void(0)" title="Like"><i class="fa fa-trash-o" th:onclick="'javascript:layer_demo('+${user.u_id}+')'"></i></a>
                 </td>
@@ -144,9 +143,14 @@
 <!------------------修改用户信息———--------------->
 <div class="panel panel-default" id="update" style="display: none;">
     <div class="panel-header">修改信息</div>
-    <div id="user_id"></div>
     <div class="panel-body">
-        <form action="" method="post" class="form form-horizontal responsive" id="demoform">
+        <form th:action="@{/user/updateuser/}" method="post" class="form form-horizontal responsive" id="demoform">
+            <div class="row cl" style="display:none;">
+                <label class="form-label col-xs-3">id</label>
+                <div class="formControls col-xs-8">
+                    <input type="text" class="input-text" name="u_id" id="u_id" autocomplete="off">
+                </div>
+            </div>
             <div class="row cl">
                 <label class="form-label col-xs-3">工/学号</label>
                 <div class="formControls col-xs-8">
@@ -246,7 +250,6 @@
     //删除问题模态框
     function layer_demo(id){
         $.ajax({
-            // data: {mid: id},
             success: function () {
                 $('#user_id').text(id);
                 // document.getElementById("problem_id").value=id;
@@ -258,15 +261,15 @@
     //调用后台删除方法
     function delete_user(){
         var id=document.getElementById("user_id").innerHTML;
-        alert(id);
+        // alert(id);
         $.ajax({
             type: "GET",
-            // data: {uid: id},
+            data: {uid: id},
             url: "/user/deleteuser",
         });
 
     }
-    //问题详情模态框
+    //用户详情模态框
     function modaldemo(id){
         // $("#modal-demo").modal("show");
         $.ajax({
@@ -277,7 +280,7 @@
             success: function (data) {
                 if (data) {
                     // 成功后开启模态框
-                    $('#user_id').attr("value",data.u_id);
+                    $('#u_id').attr("value",data.u_id);
                     $('#u_no').attr("value",data.u_no);
                     $('#u_name').attr("value",data.u_name);
                     $('#password').attr("value",data.password);
@@ -291,9 +294,6 @@
                 }
             }
         });
-    }
-    function deleteNumber(id) {
-        alert(id)
     }
 </script>
 </body>

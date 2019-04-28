@@ -15,6 +15,13 @@
     <![endif]-->
     <style type="text/css">
         .ui-sortable .panel-header{ cursor:move}
+        .try{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float:left;
+        }
     </style>
     <title>管理员版 项目列表</title>
     <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
@@ -70,7 +77,7 @@
 
 </div>
 <!------------------项目详情的列表-------------->
-<div class="panel panel-default mt-20">
+<div  class="panel panel-default mt-20">
     <div  class="panel-header" >项目详情</div>
     <div class="panel-body">
         <div id="HuiTab-demo1" class="HuiTab">
@@ -90,21 +97,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="col1">1XXX </td>
-                        <a href="../teachers/t_project.html">
-                            <td class="col2">1XXX
-                                <a href="../managers/m_project.html"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
-                            </td>
-                        </a>
-                    </tr>
-                    <tr>
-                        <td class="col1">2XXX </td>
-                        <td class="col2">2XXX </td>
-                    </tr>
-                    <tr>
-                        <td class="col1">3XXX </td>
-                        <td class="col2">3XXX </td>
+                    <tr th:each="project:${projectList1}">
+                        <td th:text="${project.p_name}" class="col1">项目名称</td>
+                        <td class="col2"><div class="try" th:text="${project.p_details}">项目简介</div>
+                            <a th:href="@{'/project/managerfindprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -118,21 +115,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="col1">1XXX </td>
-                        <a href="../teachers/t_project.html">
-                            <td class="col2">1XXX
-                                <a href="../managers/m_project.html"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
-                            </td>
-                        </a>
-                    </tr>
-                    <tr>
-                        <td class="col1">2XXX </td>
-                        <td class="col2">2XXX </td>
-                    </tr>
-                    <tr>
-                        <td class="col1">4XXX </td>
-                        <td class="col2">4XXX </td>
+                    <tr th:each="project:${projectList2}">
+                        <td th:text="${project.p_name}" class="col1">项目名称</td>
+                        <td class="col2"><div class="try" th:text="${project.p_details}">项目简介</div>
+                            <a th:href="@{'/project/managerfindprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -146,21 +133,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="col1">1XXX </td>
-                        <a href="../teachers/t_project.html">
-                            <td class="col2">1XXX
-                                <a href="../managers/m_project.html"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
-                            </td>
-                        </a>
-                    </tr>
-                    <tr>
-                        <td class="col1">3XXX </td>
-                        <td class="col2">3XXX </td>
-                    </tr>
-                    <tr>
-                        <td class="col1">4XXX </td>
-                        <td class="col2">4XXX </td>
+                    <tr th:each="project:${projectList3}">
+                        <td th:text="${project.p_name}" class="col1">项目名称</td>
+                        <td class="col2"><div class="try" th:text="${project.p_details}">项目简介</div>
+                            <a th:href="@{'/project/managerfindprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -174,58 +151,34 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="col1">1XXX </td>
-                        <a href="../teachers/t_project.html">
-                            <td class="col2">1XXX
-                                <a href="../managers/m_project.html"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
-                            </td>
-                        </a>
+                    <tr th:each="project:${projectList4}">
+                        <td th:text="${project.p_name}" class="col1">项目名称</td>
+                        <td class="col2"><div class="try" th:text="${project.p_details}">项目简介</div>
+                            <a th:href="@{'/project/managerfindprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
+                        </td>
                     </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tabCon" >
+                <table class="table table-border table-bordered table-striped mt-20">
+                    <thead>
                     <tr>
-                        <td class="col1">3XXX </td>
-                        <td class="col2">3XXX </td>
+                        <th class="col1" style="width: 150px">项目名称</th>
+                        <th class="col2">项目简介</th>
                     </tr>
-                    <tr>
-                        <td class="col1">4XXX </td>
-                        <td class="col2">4XXX </td>
+                    </thead>
+                    <tbody>
+                    <tr th:each="project:${projectList5}">
+                        <td th:text="${project.p_name}" class="col1">项目名称</td>
+                        <td class="col2"><div class="try" th:text="${project.p_details}">项目简介</div>
+                            <a th:href="@{'/project/managerfindprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
-    <div class="panel-body" style="display: none;">
-        <table class="table table-border table-bordered table-striped mt-20">
-            <thead>
-            <tr>
-                <th class="col1" style="width: 150px">项目名称</th>
-                <th class="col2">项目简介</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="col1">1XXX </td>
-                <a href="../teachers/t_project.html">
-                    <td class="col2">1XXX
-                        <a href="../managers/m_project.html"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
-                    </td>
-                </a>
-            </tr>
-            <tr>
-                <td class="col1">2XXX </td>
-                <td class="col2">2XXX </td>
-            </tr>
-            <tr>
-                <td class="col1">3XXX </td>
-                <td class="col2">3XXX </td>
-            </tr>
-            <tr>
-                <td class="col1">4XXX </td>
-                <td class="col2">4XXX </td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 <!------------------script----------------->
@@ -256,6 +209,7 @@
     $("#HuiTab-demo1").Huitab({
         index:0
     });
+
 </script>
 </body>
 </html>

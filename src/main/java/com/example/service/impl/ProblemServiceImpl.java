@@ -21,43 +21,61 @@ public class ProblemServiceImpl implements ProblemService
 
 {
     @Autowired
-    ProblemDao messageDao;
+    ProblemDao problemDao;
 
     @Override
     public List<Message> findAllProblem() {
-        return messageDao.findAllProblem();
+        return problemDao.findAllProblem();
+    }
+
+    @Override
+    public List<Message> findNewProblem() {
+        return problemDao.findNewProblem();
+    }
+
+    @Override
+    public int newProblemCount() {
+        return problemDao.newProblemCount();
     }
 
     @Override
     public Message findProblemByMid(int mid) {
-        return messageDao.findProblemByMid(mid);
+        return problemDao.findProblemByMid(mid);
     }
 
     @Override
     public Message findReplyByMid(int mid) {
-        return messageDao.findReplyByMid(mid);
+        return problemDao.findReplyByMid(mid);
     }
 
     @Override
     public int deleteProblem(int mid) {
-        return messageDao.deleteProblem(mid);
+        return problemDao.deleteProblem(mid);
     }
 
     @Override
     public int addProblem(Message problem) {
-        return messageDao.addProblem(problem);
+        return problemDao.addProblem(problem);
     }
 
     @Override
-    public List<Message> findProblemByUid(int uid) {
-        return messageDao.findProblemByUid(uid);
+    public List<Message> findReplyByUid(int uid) {
+        return problemDao.findReplyByUid(uid);
     }
+
+//    @Override
+//    public List<Message> findProblemByUid(int uid) {
+//        return problemDao.findProblemByUid(uid);
+//    }
+
+    @Override
+    public Message findProblemByUid(int uid) { return problemDao.findProblemByUid(uid); }
 
     @Override
     public int addReply(Message reply) {
-        return messageDao.addReply(reply);
+        return problemDao.addReply(reply);
     }
 
     @Override
-    public void updateProblemState(int mid) { messageDao.updateProblemState(mid);}
+    public void updateProblemState(int mid) { problemDao.updateProblemState(mid);}
 }

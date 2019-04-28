@@ -15,6 +15,13 @@
     <![endif]-->
     <style type="text/css">
         .ui-sortable .panel-header{ cursor:move}
+        .try{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float:left;
+        }
     </style>
     <title>老师版 回复问题</title>
     <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
@@ -56,7 +63,7 @@
                                 <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}"  >修改个人信息</a>
+                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}">修改个人信息</a>
                                     </li>
                                     <li>
                                         <a href="../login.html">退出系统</a>
@@ -94,20 +101,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="col1">1XXX</td>
-                <td class="col2">1XXX</td>
-                <td class="col3" id="messageDetails" th:onclick="'selectNumber(\''+${dictionary.id}+'\',\''+${dictionary.typeKey}+'\',\''+${dictionary.typeValue}+'\',\''+${dictionary.parentID}+'\',\''+${dictionary.editable}+'\');'">1XXX</td>
-            </tr>
-            <tr>
-                <td class="col1">2XXX</td>
-                <td class="col2">2XXX</td>
-                <td class="col3">2XXX</td>
-            </tr>
-            <tr>
-                <td class="col1">3XXX</td>
-                <td class="col2">3XXX</td>
-                <td class="col3">3XXX</td>
+            <tr th:each="problem:${problemList}">
+                <td th:text="${problem.m_title}" class="col1">问题主题</td>
+                <td th:text="${problem.create_time}" class="col2">提问时间</td>
+                <td th:onclick="'javascript:modaldemo('+${problem.m_id}+')'" >
+                    <div class="try" th:text="${problem.m_details}" th:onclick="'javascript:modaldemo('+${problem.m_id}+')'" >问题详情</div>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -127,22 +126,23 @@
             </thead>
             <tbody>
             <tr>
-                <td class="col1">XXXX</td>
-                <td class="col2">XXXX</td>
-                <td class="col3">XXXX</td>
+                <td class="col1" name="m_title" id="problem_title">问题主题</td>
+                <td class="col2" name="create_time" id="create_time">提问时间</td>
+                <td class="col3" name="m_details" id="problem_details">问题详情</td>
             </tr>
             </tbody>
         </table>
 
-        <form action="" method="post" class="form form-horizontal responsive"  id="demoform">
+        <form th:action="@{'/problem/addreply/'+${session.userid}}" method="get" class="form form-horizontal responsive"  id="demoform">
+            <input name="m_id" style="display: block"/>
         <div class="row cl" >
             <div class="formControls col-xs-8">
-                <textarea cols="" rows="" class="textarea" name="porjectDetails" id="porjectDetails"  placeholder="回复问题..."></textarea>
+                <textarea cols="" rows="" class="textarea" name="m_details" id="m_details"  placeholder="回复问题..."></textarea>
             </div>
         </div>
         <div class="row cl" >
             <div class="col-xs-8 col-xs-offset-3" >
-                <input style="float: right;margin-left: 100px" type="submit" class="btn btn-primary radius" value="&nbsp;&nbsp;发&nbsp;&nbsp;送&nbsp;&nbsp;">
+                <input style="float: right;margin-left: 100px" type="submit" class="btn btn-primary radius" value="&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;">
                 <input style="float: right;" type="button" class="btn btn-primary radius" value="&nbsp;&nbsp;取&nbsp;&nbsp;消&nbsp;&nbsp;">
             </div>
         </div>
@@ -174,26 +174,29 @@
         });
 
     });
-    $(document).ready(function(){
-        $("#messageDetails").click(function(){
-            $("#reply").slideToggle();
-        });
-    });
-    function selectNumber(id, title, time, details) {
-        //默认选中
-        var num = $("#select1").find("option");
-        for (var j = 0; j < num.length; j++) {
-            if ($(num[j]).val() == (pid)) {
-                num[j].selected = true;
-                break;
+    //回复框详情模态框
+    function modaldemo(id){
+        // $("#modal-demo").modal("show");
+        $.ajax({
+            type: "GET",
+            data: {mid: id},
+            url: "/problem/findproblembymid",
+            dataType : "json",
+            success: function (data) {
+                if (data) {
+                    // 成功后开启模态框
+                    $('#problem_title').text(data.from_id);
+                    $('#create_time').text(data.create_time);
+                    $('#problem_details').text(data.m_details);
+                    $('#problem_id').text(data.m_id);
+                    $(".try").click(function(){
+                        $("#reply").slideToggle();
+                    });
+                } else {
+                    alert("查找失败");
+                }
             }
-        }
-        //默认显示
-        $("#m_typeKey").val(key);
-        $("#m_typeKey").attr("value", key);
-        $("#m_typeValue").val(value);
-        $("#m_typeValue").attr("value", value);
-        $("#m_id").val(id);
+        });
     }
 </script>
 </body>

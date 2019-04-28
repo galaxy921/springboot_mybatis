@@ -36,10 +36,10 @@
                     <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                         <ul class="cl">
                             <li class="dropDown dropDown_hover">
-                                <a th:href="@{/project/findallproject}" class="dropDown_A">项目管理</a>
+                                <a th:href="@{/project/rootfindallproject}" class="dropDown_A">项目管理</a>
                             </li>
                             <li class="dropDown dropDown_hover">
-                                <a th:href="@{/problem/findallproblem}" class="dropDown_A">问题管理</a>
+                                <a th:href="@{/problem/rootfindallproblem}" class="dropDown_A">问题管理</a>
                             </li>
                             <li class="dropDown dropDown_hover">
                                 <a href="javascript:;" class="dropDown_A">用户管理<i class="Hui-iconfont">&#xe6d5;</i></a>
@@ -60,7 +60,7 @@
                                 <a href="javascript:;" class="dropDown_A">公告管理<i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a th:href="@{/notice/findallnotice}">查看公告</a><!--删除公告放在这里 按钮-->
+                                        <a th:href="@{/notice/rootfindallnotice}">查看公告</a><!--删除公告放在这里 按钮-->
                                     </li>
                                     <li>
                                         <a th:href="@{/notice/addnotice}" >发布公告</a>
@@ -71,10 +71,10 @@
                                 <a href="javascript:;" class="dropDown_A"><span th:text="${session.userno}"/>&nbsp<span th:text="${session.username}"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a th:href="@{'/user/finduserbyuid/'+${session.userid}}"  >修改个人信息</a>
+                                        <a th:href="@{'/user/rootfinduserbyuid/'+${session.userid}}"  >修改个人信息</a>
                                     </li>
                                     <li>
-                                        <a href="../login.html"  >退出系统</a>
+                                        <a th:href="@{/user/logout}">退出系统</a>
                                     </li>
                                 </ul>
                             </li>

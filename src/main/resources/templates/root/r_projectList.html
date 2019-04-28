@@ -67,7 +67,7 @@
                                 <a href="javascript:;" class="dropDown_A">公告管理<i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/notice.html">查看公告</a><!--删除公告放在这里 按钮-->
+                                        <a href="notice.html">查看公告</a><!--删除公告放在这里 按钮-->
                                     </li>
                                     <li>
                                         <a href="../root/notice_add.html">发布公告</a>
@@ -118,7 +118,7 @@
             <tr th:each="project:${projectList}">
                 <td th:text="${project.p_name}" class="col1">项目名称</td>
                 <td class="col2"><div class="try" th:text="${project.p_details}">项目简介</div>
-                    <a th:href="@{'/project/findprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
+                    <a th:href="@{'/project/rootfindprojectbypid/'+${project.p_id}}"><span style="float: right" class="share-text Hui-iconfont">&#xe715;</span></a>
                 </td>
             </tr>
             </tbody>

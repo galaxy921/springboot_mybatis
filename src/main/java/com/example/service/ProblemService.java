@@ -14,6 +14,10 @@ import java.util.List;
 public interface ProblemService {
     public List<Message> findAllProblem();
 
+    public List<Message> findNewProblem();
+
+    public int newProblemCount();
+
     public Message findProblemByMid(int mid);
 
     public Message findReplyByMid(int mid);
@@ -22,7 +26,10 @@ public interface ProblemService {
 
     public int addProblem(Message problem);
 
-    public List<Message> findProblemByUid(int uid);
+//    public List<Message> findProblemByUid(int uid);
+    public Message findProblemByUid(int uid);
+
+    public List<Message> findReplyByUid(int uid);
 
     public int addReply(Message reply);
 

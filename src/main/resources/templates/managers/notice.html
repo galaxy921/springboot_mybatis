@@ -15,6 +15,14 @@
     <![endif]-->
     <style type="text/css">
         .ui-sortable .panel-header{ cursor:move}
+
+        .try{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float:left;
+        }
     </style>
     <title>管理员版 公告列表</title>
     <meta name="keywords" content="关键词,5个左右,单个8汉字以内">
@@ -80,24 +88,20 @@
             <tr>
                 <th class="col1" style="width: 150px">公告主题</th>
                 <th class="col2">公告详情</th>
-                <th class="col3" style="width: 250px;">发布时间</th>
+                <th class="col3" style="width: 220px;">发布时间</th>
+                <th class="col4" style="width: 30px;" th:if="${session.position==0}"></th:if>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="col1" >XXXX</td>
-                <td class="col3" onClick="modaldemo()">XXXX</td>
-                <td class="col2">XXXX</td>
-            </tr>
-            <tr>
-                <td class="col1">XXXX</td>
-                <td class="col3" onClick="modaldemo()">XXXX</td>
-                <td class="col2">XXXX</td>
-            </tr>
-            <tr>
-                <td class="col1">XXXX</td>
-                <td class="col3" onClick="modaldemo()">XXXX</td>
-                <td class="col2">XXXX</td>
+            <tr th:each="notice:${noticeList}">
+                <td class="col1" th:text="${notice.m_title}">公告主题</td>
+                <td class="col2" th:onclick="'javascript:modaldemo('+${notice.m_id}+')'" >
+                    <div class="try" th:text="${notice.m_details}" th:onclick="'javascript:modaldemo('+${notice.m_id}+')'" >公告详情</div>
+                </td>
+                <td class="col3" th:text="${notice.create_time}">发布时间</td>
+                <td class="col4" th:if="${session.position==0}">
+                    <i class="fa fa-trash-o" th:onclick="'javascript:layer_demo('+${notice.m_id}+')'"></i>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -112,8 +116,8 @@
                 <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
             </div>
             <div class="modal-body">
-                <p>公告内容</p>
-                <p style="height: 10px;margin-right: 20px;float: right">公告时间</p>
+                <p id="notice_details">公告内容</p>
+                <p id="create_time" style="height: 10px;margin-right: 20px;float: right">公告时间</p>
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
@@ -121,8 +125,6 @@
         </div>
     </div>
 </div>
-
-
 <!--------script--------->
 <script type="text/javascript" src="../../js2/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../lib2/DD_belatedPNG_0.0.8a-min.js"></script>
@@ -136,6 +138,7 @@
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="../../lib2/jquery.validation/1.14.0/messages_zh.min.js"></script>
 <script>
+    //收缩框框
     $(function() {
         $(".panel").Huifold({
             titCell:'.panel-header',
@@ -147,9 +150,28 @@
         });
 
     });
-    //弹窗
-    function modaldemo(){
-        $("#modal-demo").modal("show");
+    //公告详情模态框
+    function modaldemo(id){
+        // $("#modal-demo").modal("show");
+        $.ajax({
+            type: "GET",
+            data: {mid: id},
+            url: "/notice/findnoticebymid",
+            dataType : "json",
+            success: function (data) {
+                if (data) {
+                    // 成功后开启模态框
+                    $('#notice_title').text(data.from_id);
+                    $('#create_time').text(data.create_time);
+                    $('#notice_details').text(data.m_details);
+                    $('#notice_id').text(data.m_id);
+                    $("#modal-demo").modal('show');
+                    // success:showQuery(data);
+                } else {
+                    alert("查找失败");
+                }
+            }
+        });
     }
 </script>
 </body>

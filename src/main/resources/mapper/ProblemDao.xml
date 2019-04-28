@@ -5,6 +5,14 @@
     <select id="findAllProblem" resultType="com.example.model.Message">
         SELECT * FROM message WHERE m_type=1;
     </select>
+<!--列出未解决问题列表-->
+    <select id="findNewProblem" resultType="com.example.model.Message">
+        SELECT * FROM message WHERE m_type=1 AND m_state=2;
+    </select>
+<!--未解决问题个数-->
+    <select id="newProblemCount" resultType="java.lang.Integer">
+        SELECT COUNT(m_state) FROM message WHERE  m_state=2;
+    </select>
 <!--查看问题详情-->
     <select id="findProblemByMid" resultType="com.example.model.Message">
         SELECT * FROM message WHERE m_id=#{m_id}
@@ -24,16 +32,20 @@
 		VALUES
 		(#{m_id},#{from_id},#{to_id},#{create_time},#{m_title},#{m_details},1,2,0)
 	</insert>
-<!--根据uid查找当前用户历史问题-->
+<!--根据uid查找当前用户历史回复-->
+    <select id="findReplyByUid" resultType="com.example.model.Message">
+        SELECT * FROM message WHERE m_type=1 AND from_id=#{u_id}
+    </select>
+    <!--根据uid查找当前用户历史问题-->
     <select id="findProblemByUid" resultType="com.example.model.Message">
-        SELECT * FROM message WHERE m_type=2 AND from_id=#{u_id}
+        SELECT * FROM message WHERE m_type=2 AND m_id=#{p_id}
     </select>
 <!--回复问题-->
     <insert id="addReply" parameterType="com.example.model.Message" useGeneratedKeys="true" keyProperty="m_id" keyColumn="m_id">
 		INSERT INTO
 		message(m_id,from_id,to_id,create_time,m_title,m_details,m_type,m_state,p_id)
 		VALUES
-		(#{m_id},#{from_id},#{to_id},#{create_time},#{m_title},#{m_details},2,#{m_state},#{m_id})
+		(#{m_id},#{from_id},#{to_id},#{create_time},#{m_title},#{m_details},2,1,#{p_id})
 	</insert>
     <!--修改问题的状态-->
     <update id="updateProblemState" parameterType="com.example.model.Message">

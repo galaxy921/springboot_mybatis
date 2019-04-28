@@ -59,7 +59,7 @@
     </select>
 <!--查看已终止的项目-->
     <select id="findStopProject" resultType="com.example.model.Project">
-        SELECT * FROM project WHERE p_state=2
+        SELECT * FROM project WHERE p_state=-2
     </select>
 <!--根据uid查看进行中的项目-->
     <select id="findRunningProjectByTid" resultType="com.example.model.Project">

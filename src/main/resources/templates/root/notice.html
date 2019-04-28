@@ -45,22 +45,22 @@
                     <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                         <ul class="cl">
                             <li class="dropDown dropDown_hover">
-                                <a href="../root/r_projectList.html" class="dropDown_A">项目管理</a>
+                                <a href="r_projectList.html" class="dropDown_A">项目管理</a>
                             </li>
                             <li class="dropDown dropDown_hover">
-                                <a href="../root/r_problemList.html" class="dropDown_A">问题管理</a>
+                                <a href="r_problemList.html" class="dropDown_A">问题管理</a>
                             </li>
                             <li class="dropDown dropDown_hover">
                                 <a href="javascript:;" class="dropDown_A">用户管理<i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/user.html" >查看用户信息</a><!--修改放在这里 按钮-->
+                                        <a href="user.html" >查看用户信息</a><!--修改放在这里 按钮-->
                                     </li>
                                     <li>
-                                        <a href="../root/user_add.html" >增加用户信息</a>
+                                        <a href="user_add.html" >增加用户信息</a>
                                     </li>
                                     <li>
-                                        <a href="../root/user_analyze.html">用户行为分析</a>
+                                        <a href="user_analyze.html">用户行为分析</a>
                                     </li>
                                 </ul>
                             </li>
@@ -68,10 +68,10 @@
                                 <a href="javascript:;" class="dropDown_A">公告管理<i class="Hui-iconfont">&#xe6d5;</i></a>
                                 <ul class="dropDown-menu menu radius box-shadow">
                                     <li>
-                                        <a href="../root/notice.html">查看公告</a><!--删除公告放在这里 按钮-->
+                                        <a href="notice.html">查看公告</a><!--删除公告放在这里 按钮-->
                                     </li>
                                     <li>
-                                        <a href="../root/notice_add.html">发布公告</a>
+                                        <a href="notice_add.html">发布公告</a>
                                     </li>
                                 </ul>
                             </li>
@@ -97,7 +97,7 @@
                 <i class="Hui-iconfont">&#xe67f;</i>
                 <span class="c-gray">系统管理员版</span>
                 <span class="c-gray en">&gt;</span>
-                <a href="../root/r_index.html" class="c-primary">首页</a>
+                <a href="r_index.html" class="c-primary">首页</a>
                 <span class="c-gray en">&gt;</span>
                 <a href="#" class="c-primary">公告列表</a>
             </div>
@@ -125,7 +125,7 @@
                     <div class="try" th:text="${notice.m_details}" th:onclick="'javascript:modaldemo('+${notice.m_id}+')'" >公告详情</div>
                 </td>
                 <td class="col3" th:text="${notice.create_time}">发布时间</td>
-                <td class="col4">
+                <td class="col4" th:if="${session.position==0}">
                     <i class="fa fa-trash-o" th:onclick="'javascript:layer_demo('+${notice.m_id}+')'"></i>
                 </td>
             </tr>

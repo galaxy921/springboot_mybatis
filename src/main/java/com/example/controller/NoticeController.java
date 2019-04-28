@@ -27,13 +27,37 @@ import java.util.List;
 public class NoticeController {
     @Autowired
     NoticeService noticeService;
-    //查看所有公告
-    @RequestMapping(value = "/findallnotice", method = RequestMethod.GET)
-    public String findAllMessage(Model model) {
+    //root查看所有公告
+    @RequestMapping(value = "/rootfindallnotice", method = RequestMethod.GET)
+    public String rootFindAllMessage(Model model) {
         List<Message> list = noticeService.findAllNotice();
         model.addAttribute("noticeList", list);
         System.out.println(list.toString());
         return "/root/notice";
+    }
+    //manager查看所有公告
+    @RequestMapping(value = "/managerfindallnotice", method = RequestMethod.GET)
+    public String managerFindAllMessage(Model model) {
+        List<Message> list = noticeService.findAllNotice();
+        model.addAttribute("noticeList", list);
+        System.out.println(list.toString());
+        return "/managers/notice";
+    }
+    //teacher查看所有公告
+    @RequestMapping(value = "/teacherfindallnotice", method = RequestMethod.GET)
+    public String teacherFindAllMessage(Model model) {
+        List<Message> list = noticeService.findAllNotice();
+        model.addAttribute("noticeList", list);
+        System.out.println(list.toString());
+        return "/teachers/notice";
+    }
+    //student查看所有公告
+    @RequestMapping(value = "/studentfindallnotice", method = RequestMethod.GET)
+    public String studentFindAllMessage(Model model) {
+        List<Message> list = noticeService.findAllNotice();
+        model.addAttribute("noticeList", list);
+        System.out.println(list.toString());
+        return "/students/notice";
     }
     //查看公告详情m_id
     @RequestMapping(value = "/findnoticebymid",method = RequestMethod.GET)

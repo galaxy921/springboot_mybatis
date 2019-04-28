@@ -15,6 +15,7 @@ import java.util.List;
  *
  * 刚提出的问题m_state=2
  * 回复的m_state=1
+ * 回复的m_title默认为"回复"
  *
  * @author :
  * create : 2019-04-21 10:51
@@ -52,6 +53,17 @@ public interface ProblemDao {
 
     //teachers
     /**
+     * 未解决的问题列表
+     * @return List
+     */
+    List<Message> findNewProblem();
+    /**
+     * 未解决问题个数
+     * @return int
+     */
+    int newProblemCount();
+
+    /**
      * 回复问题
      * @param reply
      * @return
@@ -66,12 +78,19 @@ public interface ProblemDao {
     int updateProblemState(int mid);
 
     /**
+     * 根据uid查找当前用户历史回复
+     * @param uid
+     * @return
+     */
+    List<Message> findReplyByUid(int uid);
+
+    /**
      * 根据uid查找当前用户历史问题
      * @param uid
      * @return
      */
-    List<Message> findProblemByUid(int uid);
-
+//    List<Message> findProblemByUid(int uid);
+      Message findProblemByUid(int uid);
     //students
     /**
      * 添加问题

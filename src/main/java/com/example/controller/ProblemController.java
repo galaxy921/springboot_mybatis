@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,18 +34,45 @@ public class ProblemController {
     ProblemService problemService;
     @Autowired
     UserService userService;
-    //查找所有问题
-    @RequestMapping(value = "/findallproblem", method = RequestMethod.GET)
-    public String findAllProblem(Model model) {
+    //root查找所有问题
+    @RequestMapping(value = "/rootfindallproblem", method = RequestMethod.GET)
+    public String rootFindAllProblem(Model model) {
         List<Message> list = problemService.findAllProblem();
         model.addAttribute("problemList", list);
         System.out.println(list.toString());
         return "/root/r_problemList";
     }
+    //manager查找所有问题
+    @RequestMapping(value = "/managerfindallproblem", method = RequestMethod.GET)
+    public String managerFindAllProblem(Model model) {
+        List<Message> list = problemService.findAllProblem();
+        model.addAttribute("problemList", list);
+        System.out.println(list.toString());
+        return "/managers/m_problemList";
+    }
+    //teacher查找所有问题
+    @RequestMapping(value = "/teacherfindallproblem", method = RequestMethod.GET)
+    public String teacherFindAllProblem(Model model) {
+        List<Message> list = problemService.findNewProblem();
+        //查看未解决问题个数
+        int count=problemService.newProblemCount();
+        model.addAttribute("count",count);
+        model.addAttribute("problemList", list);
+        System.out.println(list.toString());
+        return "/teachers/reply";
+    }
+    //student查找所有问题
+    @RequestMapping(value = "/studentfindallproblem", method = RequestMethod.GET)
+    public String studentFindAllProblem(Model model) {
+        List<Message> list = problemService.findAllProblem();
+        model.addAttribute("problemList", list);
+        System.out.println(list.toString());
+        return "/students/s_problemList";
+    }
     //查看问题详情m_id
     @RequestMapping(value = "/findproblembymid",method = RequestMethod.GET)
     @ResponseBody
-        public Message findProblemdByMid( int mid) throws JSONException {
+    public Message findProblemdByMid( int mid) throws JSONException {
         System.out.println("问题啦啦啦啦啦啦");
         System.out.println("根据id查找问题信息"+mid);
         Message problem=problemService.findProblemByMid(mid);
@@ -61,7 +90,6 @@ public class ProblemController {
 //        System.out.println("我也不知道这是要干嘛呀"+response);
         return problem;
     }
-
     //根据问题查看回复 pid=mid
     @RequestMapping(value = "/findreplybymid",method = RequestMethod.GET)
     @ResponseBody
@@ -84,23 +112,39 @@ public class ProblemController {
     //根据uid查找当前用户历史问题
     @RequestMapping(value = "/findproblembyuid/{uid}", method = RequestMethod.GET)
     public String findProblemByUid(Model model, @PathVariable("uid") int uid) {
-        List<Message> list = problemService.findProblemByUid(uid);
+        //根据uid查找当前用户历史回复
+        /**
+         * 当f=u的时候 拿出p 然后再当m=p的时候查数据
+         */
+        System.out.println("有点蒙 进来了没呢");
+        List<Message> pidList = problemService.findReplyByUid(uid);
+        System.out.println(uid);
+        List<Message> list=new ArrayList<Message>();
+        for(int i=1;i<=pidList.size();i++){
+            int pid=pidList.get(i).getP_id();
+            System.out.println(pid);
+            Message problem= problemService.findProblemByUid(pid);
+            list.add(problem);
+        }
         model.addAttribute("problemList", list);
         System.out.println(list.toString());
-        return "/students/problemList";
+        return "/teachers/problemList";
     }
     //回复问题
-    @RequestMapping(value = "/addreply",method = RequestMethod.GET)
-    public String addReply(Message reply,Model model){
+    @RequestMapping(value = "/addreply/{uid}",method = RequestMethod.GET)
+    public String addReply(Message reply,Model model,@PathVariable("uid") int uid){
         System.out.println(reply.toString());
+        reply.setFrom_id(uid);
+        reply.setTo_id(userService.findUserByUid(reply.getM_id()).getU_id());
+        reply.setCreate_time(new Date());
+        reply.setM_title("回复");
+        reply.setP_id(reply.getM_id());
         problemService.addReply(reply);
         System.out.println("添加问题"+reply.getM_id());
         //修改问题状态
         problemService.updateProblemState(reply.getM_id());
-        return "redirect:/root/r_problemList";
+        return "redirect:/problem/teacherfindallproblem";
     }
-
-
     //删除问题  应该有级联删除    ****
     @RequestMapping(value = "/deleteproblem", method = RequestMethod.GET)
     public String deleteProblem(HttpServletRequest request,int mid) {
@@ -117,5 +161,4 @@ public class ProblemController {
             System.out.println(e);
         }
     }
-
 }
